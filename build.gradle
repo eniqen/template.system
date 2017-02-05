@@ -49,6 +49,13 @@ codeCoverageReport.dependsOn {
 	subprojects*.test
 }
 
+jacocoTestReport {
+	reports {
+		xml.enabled true
+		html.enabled false
+	}
+}
+
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
