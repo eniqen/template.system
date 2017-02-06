@@ -1,0 +1,67 @@
+@startuml
+
+package "org.bitbucket.eniqen.models" {
+
+    abstract class BaseEntity <Serializable> {
+        -id: String
+        -version: int
+        -status: Status
+    }
+
+    abstract class BaseNamedEntity {
+        -name: String
+        -description: String
+    }
+
+    class Template {
+    }
+
+    class Document {
+    }
+
+    class Field {
+       -type: FieldType
+    }
+
+    class TemplatesFields {
+        -id: String
+        -template_id: String
+        -field_id: String
+        -ordinal: int
+
+    }
+
+    class DocumentsFields {
+        -document_id: String
+        -template_field_id: String
+        -value String
+    }
+
+    enum FieldType {
+        CHECKBOX
+        TEXTAREA
+        INPUT
+    }
+
+    enum Status {
+        ACTIVE
+        DELETED
+    }
+
+    BaseEntity <|-- BaseNamedEntity
+    BaseNamedEntity <|-- Field
+    BaseNamedEntity <|-- Template
+    BaseNamedEntity <|-- Document
+    BaseEntity "*" *-- "1" Status : use
+
+    TemplatesFields "*" o-- "1" Template
+    TemplatesFields "*" o-- "1" Field
+
+    DocumentsFields o-- TemplatesFields
+    DocumentsFields "*" o-- "1" Document
+
+    Field "*" *-- "1" FieldType : use
+
+}
+
+@enduml
