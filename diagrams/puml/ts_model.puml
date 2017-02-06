@@ -59,13 +59,13 @@ package "org.bitbucket.eniqen.models" {
     BaseNamedEntity <|-- Template
     BaseNamedEntity <|-- Document
 
-    TemplatesFields "*" o--* "1" Template
-    TemplatesFields "*" o--* "1" Field
+    TemplatesFields "*" *--o "1" Template
+    TemplatesFields "*" *--o "1" Field
 
-    DocumentsFields "*" --* "*" TemplatesFields
-    DocumentsFields "*" o-- "1" Document
+    DocumentsFields "*" *-- "1" TemplatesFields
+    DocumentsFields "*" *--o "1" Document
 
-    Template "1" *-- "*" Document
+    Template "1" --* "*" Document
     Field "1" *-- "*" FieldType : use
 }
 
