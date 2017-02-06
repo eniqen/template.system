@@ -14,26 +14,30 @@ package "org.bitbucket.eniqen.models" {
     }
 
     class Template {
+    -templateFields: List<TemplatesFields>
     }
 
     class Document {
+        -template_id: Template
+        -documentFields: List<DocumentsFields>
     }
 
     class Field {
        -type: FieldType
+       -templateFields: List<TemplatesFields>
     }
 
     class TemplatesFields {
         -id: String
-        -template_id: String
-        -field_id: String
+        -template_id: Template
+        -field_id: Field
         -ordinal: int
 
     }
 
     class DocumentsFields {
-        -document_id: String
-        -template_field_id: String
+        -document_id: Document
+        -template_field_id: TemplatesFields
         -value String
     }
 
@@ -49,19 +53,20 @@ package "org.bitbucket.eniqen.models" {
     }
 
     BaseEntity <|-- BaseNamedEntity
+    BaseEntity "1" *-- "*" Status : use
+
     BaseNamedEntity <|-- Field
     BaseNamedEntity <|-- Template
     BaseNamedEntity <|-- Document
-    BaseEntity "*" *-- "1" Status : use
 
-    TemplatesFields "*" o-- "1" Template
-    TemplatesFields "*" o-- "1" Field
+    TemplatesFields "*" o--* "1" Template
+    TemplatesFields "*" o--* "1" Field
 
-    DocumentsFields o-- TemplatesFields
+    DocumentsFields "*" --* "*" TemplatesFields
     DocumentsFields "*" o-- "1" Document
 
-    Field "*" *-- "1" FieldType : use
-
+    Template "1" *-- "*" Document
+    Field "1" *-- "*" FieldType : use
 }
 
 @enduml
