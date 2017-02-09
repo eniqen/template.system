@@ -16,16 +16,16 @@ public class Document extends BaseEntity {
     private String name;
 
     @ElementCollection
-    @MapKeyColumn(name = "template.templateFields.field.id")
+    @MapKeyColumn(name = "id")
     @Cascade(value = CascadeType.ALL)
-    private Map<Field, String> fieldValues = new HashMap<>();
+    private Map<TemplateField, String> templateFieldId = new HashMap<>();
 
     @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
     @JoinColumn(name = "TEMPLATE_ID")
     private Template template;
 
-    public Map<Field, String> getFieldValues() {
-        return fieldValues;
+    public Map<TemplateField, String> getFieldValues() {
+        return templateFieldId;
     }
 
     public String getName() {
@@ -36,8 +36,8 @@ public class Document extends BaseEntity {
         this.name = name;
     }
 
-    public void setFieldValues(Map<Field, String> fieldValues) {
-        this.fieldValues = fieldValues;
+    public void setFieldValues(Map<TemplateField, String> fieldValues) {
+        this.templateFieldId = fieldValues;
     }
 
     public Template getTemplate() {

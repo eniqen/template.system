@@ -1,9 +1,10 @@
 package org.bitbucket.eniqen.repositories;
 
-import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
+
+import org.bitbucket.eniqen.models.Template;
 
 /**
  * @author Mikhail Nemenko {@literal <nemenkoma@gmail.com>}
  */
-public interface TemplateRepository extends BaseRepository<RabbitProperties.Template, String> {
+public interface TemplateRepository extends BaseRepository<Template, String> {
 }

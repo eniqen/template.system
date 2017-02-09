@@ -1,45 +1,33 @@
 package org.bitbucket.eniqen.models;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 
 /**
  * @author Mikhail Nemenko {@literal <nemenkoma@gmail.com>}
  */
 @Entity
-public class Field extends BaseEntity {
+public class Field extends BaseNamedDictionaryEntry {
 
-    @Enumerated(EnumType.STRING )
-    private FieldType fieldType;
+	@Enumerated(EnumType.STRING)
+	private FieldType fieldType;
 
-    private String name;
+	public Field(FieldType type, String name, String description) {
+		super(name, description);
+		this.fieldType = type;
+	}
 
-    private String description;
+	public Field() {
+	}
 
-    public Field(FieldType type, String description, String name) {
-        this.fieldType = type;
-        this.description = description;
-        this.name = name;
-    }
+	public FieldType getFieldType() {
+		return fieldType;
+	}
 
-    public Field() {
-    }
-
-    public FieldType getFieldType() {
-        return fieldType;
-    }
-
-    public void setFieldType(FieldType fieldType) {
-        this.fieldType = fieldType;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setFieldType(FieldType fieldType) {
+		this.fieldType = fieldType;
+	}
 }
 

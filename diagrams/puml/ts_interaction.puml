@@ -1,0 +1,52 @@
+@startuml
+package org.bitbucket.eniqen.api {
+    class TemplateControler {
+    }
+
+    class DocumentController {
+    }
+}
+
+package org.bitbucket.eniqen.service {
+
+    interface TemplateService {
+        +create()
+        +update()
+        +getAll(Pageble, Sortable): Collection<Template>
+        +get(String id): Field
+        +activate(String id): boolean
+        +deactivate(String id): boolean
+        +delete(String id): boolean
+    }
+
+    interface DocumentService {
+        +create()
+        +update()
+        +getAll(Pageble, Sortable): Collection<Document>
+        +get(String id): Field
+        +activate(String id): boolean
+        +deactivate(String id): boolean
+        +delete(String id): boolean
+    }
+}
+
+package org.bitbucket.eniqen.repository {
+    interface FieldRepository {
+    }
+
+    interface TemplateRepository {
+    }
+
+    interface DocumentRepository {
+    }
+}
+
+    TemplateControler --> TemplateService
+    DocumentController --> DocumentService
+
+    TemplateService --> TemplateRepository
+    TemplateService --> FieldRepository
+    DocumentService --> DocumentRepository
+    DocumentService --> TemplateRepository
+
+@enduml

@@ -11,11 +11,15 @@ import java.io.Serializable;
 public class TemplateField implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+
+//	@Id
 	@ManyToOne
 	@JoinColumn(name = "field_id")
 	private Field field;
 
-	@Id
+//	@Id
 	@ManyToOne
 	@JoinColumn(name = "template_id")
 	private Template template;
@@ -53,5 +57,13 @@ public class TemplateField implements Serializable {
 
 	public void setTemplate(Template template) {
 		this.template = template;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

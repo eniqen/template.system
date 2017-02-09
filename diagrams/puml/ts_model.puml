@@ -53,20 +53,20 @@ package "org.bitbucket.eniqen.models" {
     }
 
     BaseEntity <|-- BaseNamedEntity
-    BaseEntity "1" *-- "*" Status : use
+    BaseEntity "1" *--> "*" Status : use
 
     BaseNamedEntity <|-- Field
     BaseNamedEntity <|-- Template
     BaseNamedEntity <|-- Document
 
-    TemplatesFields "*" *--o "1" Template
-    TemplatesFields "*" *--o "1" Field
+    TemplatesFields "*" <--* "1" Template
+    TemplatesFields "*" *--> "1" Field
 
-    DocumentsFields "*" *-- "1" TemplatesFields
+    DocumentsFields "*" *--> "1" TemplatesFields
     DocumentsFields "*" *--o "1" Document
 
-    Template "1" --* "*" Document
-    Field "1" *-- "*" FieldType : use
+    Template "1" <--* "*" Document
+    Field "1" *--> "*" FieldType : use
 }
 
 @enduml

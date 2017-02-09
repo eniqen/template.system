@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * @author Mikhail Nemenko {@literal <nemenkoma@gmail.com>}
@@ -14,4 +15,6 @@ import java.io.Serializable;
 public interface BaseRepository<T, ID extends Serializable> extends JpaRepository<T, ID> {
 
     Page<T> findAll(Pageable pageable);
+
+    Optional<T> findById(String id);
 }

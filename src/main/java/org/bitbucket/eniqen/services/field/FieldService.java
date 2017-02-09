@@ -3,6 +3,7 @@ package org.bitbucket.eniqen.services.field;
 import org.bitbucket.eniqen.models.Field;
 import org.bitbucket.eniqen.models.FieldType;
 import org.springframework.data.domain.Page;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
  *
  * @author Mikhail Nemenko {@literal <nemenkoma@gmail.com>}
  */
+@Transactional(readOnly = true)
 public interface FieldService {
 
 	/**
