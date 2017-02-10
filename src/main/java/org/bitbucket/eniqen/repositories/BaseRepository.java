@@ -18,8 +18,6 @@ public interface BaseRepository<T, ID extends Serializable> extends Repository<T
 
     Page<T> findAll(Pageable pageable);
 
-    Stream<T> streamFindAll();
-
     List<T> findAll();
 
     Optional<T> findOne(ID id);

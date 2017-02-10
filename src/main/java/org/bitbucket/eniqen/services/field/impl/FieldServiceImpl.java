@@ -35,9 +35,8 @@ public class FieldServiceImpl implements FieldService {
 	@Override
 	public Field update(String id, FieldType type, String name, String description) {
 		Field field = fieldRepository.findOne(id).orElseThrow(IllegalArgumentException::new);
-
 		field.setName(name);
-		field.setFieldType(type);
+		field.setType(type);
 		field.setDescription(description);
 
 		return fieldRepository.save(field);

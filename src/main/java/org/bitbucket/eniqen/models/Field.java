@@ -12,22 +12,22 @@ import javax.persistence.Enumerated;
 public class Field extends BaseNamedDictionaryEntry {
 
 	@Enumerated(EnumType.STRING)
-	private FieldType fieldType;
+	private FieldType type;
 
 	public Field(FieldType type, String name, String description) {
 		super(name, description);
-		this.fieldType = type;
+		this.type = type;
 	}
 
 	public Field() {
 	}
 
-	public FieldType getFieldType() {
-		return fieldType;
+	public FieldType getType() {
+		return type;
 	}
 
-	public void setFieldType(FieldType fieldType) {
-		this.fieldType = fieldType;
+	public void setType(FieldType type) {
+		this.type = type;
 	}
 }
 
