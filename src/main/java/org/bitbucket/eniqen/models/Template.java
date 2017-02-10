@@ -21,9 +21,6 @@ public class Template extends BaseEntity {
 	@OrderBy(value = "ordinal")
 	private Set<TemplateField> templateFields = new HashSet<>();
 
-	@OneToMany(mappedBy = "template", cascade = CascadeType.ALL)
-	private List<Document> document;
-
 	public Template() {
 	}
 
@@ -35,11 +32,6 @@ public class Template extends BaseEntity {
 	public Template(String description, String name, Set<TemplateField> templateFields) {
 		this(description, name);
 		this.templateFields = templateFields;
-	}
-
-	public Template(String description, String name, Set<TemplateField> fields, List<Document> document) {
-		this(description, name, fields);
-		this.document = document;
 	}
 
 	public String getDescription() {
@@ -64,13 +56,5 @@ public class Template extends BaseEntity {
 
 	public void setFields(Set<TemplateField> fields) {
 		this.templateFields = fields;
-	}
-
-	public List<Document> getDocument() {
-		return document;
-	}
-
-	public void setDocument(List<Document> document) {
-		this.document = document;
 	}
 }

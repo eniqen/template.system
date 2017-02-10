@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.util.UUID;
+
 @SpringBootApplication(scanBasePackages = "org.bitbucket.eniqen")
 @EntityScan("org.bitbucket.eniqen.models")
 @EnableJpaRepositories("org.bitbucket.eniqen.repositories")
@@ -17,6 +19,8 @@ public class Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-
+		for (int i = 0; i < 3; i++) {
+			System.out.println(UUID.randomUUID().toString());
+		}
 	}
 }
