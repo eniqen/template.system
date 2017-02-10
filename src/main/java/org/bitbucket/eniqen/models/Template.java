@@ -9,13 +9,7 @@ import java.util.Set;
  * @author Mikhail Nemenko {@literal <nemenkoma@gmail.com>}
  */
 @Entity
-public class Template extends BaseEntity {
-
-	@Column(name = "description")
-	private String description;
-
-	@Column(name = "name")
-	private String name;
+public class Template extends BaseNamedDictionaryEntry {
 
 	@OneToMany(mappedBy = "template", cascade = CascadeType.ALL, orphanRemoval = true)
 	@OrderBy(value = "ordinal")
@@ -24,30 +18,13 @@ public class Template extends BaseEntity {
 	public Template() {
 	}
 
-	public Template(String description, String name) {
-		this.description = description;
-		this.name = name;
+	public Template(String name, String description) {
+		super(name, description);
 	}
 
-	public Template(String description, String name, Set<TemplateField> templateFields) {
+	public Template(String name, String description, Set<TemplateField> templateFields) {
 		this(description, name);
 		this.templateFields = templateFields;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public Set<TemplateField> getFields() {

@@ -11,9 +11,7 @@ import java.util.Map;
  * @author Mikhail Nemenko {@literal <nemenkoma@gmail.com>}
  */
 @Entity
-public class Document extends BaseEntity {
-
-    private String name;
+public class Document extends BaseNamedDictionaryEntry {
 
     @ElementCollection
     @MapKeyColumn(name = "id")
@@ -26,14 +24,6 @@ public class Document extends BaseEntity {
 
     public Map<TemplateField, String> getFieldValues() {
         return templateFieldId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setFieldValues(Map<TemplateField, String> fieldValues) {
