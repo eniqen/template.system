@@ -14,7 +14,7 @@ import org.springframework.data.domain.PageRequest;
  *
  * @author Mikhail Nemenko {@literal <nemenkoma@gmail.com>}
  */
-@DatabaseSetup(DocumentRepositoryTest.DATASET)
+@DatabaseSetup(value = {TemplateRepositoryTest.DATASET, DocumentRepositoryTest.DATASET})
 @DatabaseTearDown(type = DatabaseOperation.DELETE_ALL, value = DocumentRepositoryTest.DATASET)
 public class DocumentRepositoryTest extends AbstractRepositoryTest {
 	public static final String DATASET = "classpath:datasets/document-table.xml";
@@ -23,7 +23,7 @@ public class DocumentRepositoryTest extends AbstractRepositoryTest {
 	private DocumentRepository documentRepository;
 
 	@Test
-	public void findAllWithPaging(){
+	public void findAllWithPaging() {
 		Page<Document> pagingResult = documentRepository.findAll(new PageRequest(0, 3));
 	}
 }

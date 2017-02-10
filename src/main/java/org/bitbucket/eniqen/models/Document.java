@@ -18,7 +18,7 @@ public class Document extends BaseNamedDictionaryEntry {
     @Cascade(value = CascadeType.ALL)
     private Map<TemplateField, String> templateFieldId = new HashMap<>();
 
-    @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
+    @ManyToOne(cascade = javax.persistence.CascadeType.ALL, optional = false)
     @JoinColumn(name = "TEMPLATE_ID")
     private Template template;
 
