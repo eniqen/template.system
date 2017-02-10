@@ -1,0 +1,68 @@
+@startuml
+
+package template-system<<Database>>{
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+' we use bold for primary key
+' green color for unique
+' and underscore for not_null
+!define primary_key(x) <b>x</b>
+!define unique(x) <color:green>x</color>
+!define not_null(x) <u>x</u>
+' other tags available:
+' <i></i>
+' <back:COLOR></color>, where color is a color name or html color code
+' (#FFAACC)
+' see: http://plantuml.com/classes.html#More
+hide methods
+hide stereotypes
+
+' entities
+
+Table(TEMPLATE, "TEMPLATE\n(TEMPLATE in our system)") {
+primary_key(id) INTEGER
+not_null(unique(NAME)) VARCHAR[32]
+not_null(STATE) VARCHAR[64]
+}
+
+Table(DOCUMENT, "DOCUMENT\n(DOCUMENT for template)") {
+primary_key(id) INTEGER
+not_null(unique(NAME)) VARCHAR[32]
+not_null(STATE) VARCHAR[64]
+not_null(TEMPLATE_ID) INTEGER
+}
+
+Table(FIELD, "FIELD\n(Field for template and Docs)") {
+primary_key(id) INTEGER
+not_null(unique(NAME)) VARCHAR[64]
+not_null(STATE) VARCHAR[32]
+not_null(TYPE) VARCHAR[32]
+}
+
+Table(TEMPLATE_FIELDS, "TEMPLATE_FIELDS\n(relationship of field and template)") {
+primary_key(id) INTEGER
+primary_key(template_id) INTEGER
+primary_key(field_id) INTEGER
+not_null(NAME_FIELD) VARCHAR[255]
+not_null(DESC_FIELD) VARCHAR[255]
+not_null(ORDINAL_FIELD) INTEGER
+}
+
+Table(DOCUMENT_FIELDS, "DOCUMENT_FIELDS\n(relationship of field and doc)") {
+primary_key(template_fields_id) INTEGER
+not_null(VALUE_FIELD) VARCHAR[255]
+}
+
+' relationships
+' one to may relationship
+TEMPLATE --> DOCUMENT : "A template may have\n many docs"
+
+' many to many relationship
+' Add mark if you like
+TEMPLATE "1" --> "*" TEMPLATE_FIELDS : "A template may \ncontain many fields"
+FIELD "1" --> "0..N" TEMPLATE_FIELDS : "A field may be \nin many templates"
+
+DOCUMENT "1" --> "*" DOCUMENT_FIELDS : "A doc may \ncontain many template_fields"
+TEMPLATE_FIELDS "1" --> "0..N" DOCUMENT_FIELDS : "A template_fields may be \nin many docs"
+}
+
+@enduml

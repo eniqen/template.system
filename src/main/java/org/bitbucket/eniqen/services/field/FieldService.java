@@ -12,7 +12,7 @@ import java.util.Optional;
  *
  * @author Mikhail Nemenko {@literal <nemenkoma@gmail.com>}
  */
-@Transactional(readOnly = true)
+
 public interface FieldService {
 
 	/**

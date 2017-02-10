@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ import java.util.Optional;
  * @author Mikhail Nemenko {@literal <nemenkoma@gmail.com>}
  */
 @Service
+@Transactional(readOnly = true)
 public class FieldServiceImpl implements FieldService {
 
 	@Autowired
@@ -22,7 +24,7 @@ public class FieldServiceImpl implements FieldService {
 
 	@Override
 	public Optional<Field> find(String id) {
-		return fieldRepository.findById(id);
+		return fieldRepository.findOne(id);
 	}
 
 	@Override
@@ -32,7 +34,7 @@ public class FieldServiceImpl implements FieldService {
 
 	@Override
 	public Field update(String id, FieldType type, String name, String description) {
-		Field field = fieldRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+		Field field = fieldRepository.findOne(id).orElseThrow(IllegalArgumentException::new);
 
 		field.setName(name);
 		field.setFieldType(type);

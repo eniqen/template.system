@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+    <field id="9aa16d3f-7997-4111-9293-4936b2e43de5" type="CHECKBOX" name="Поле-1" description="Тестовое поле-1" />
+    <field id="ad0af9b0-34b2-4616-96ec-38ab295e13db" type="INPUT" name="Поле-2" description="Тестовое поле-2" />
+    <field id="1fc35485-c78f-4c4c-9a0b-a4e37831611b" type="TEXTAREA" name="Поле-3" description="Тестовое поле-3" />
+</dataset>
