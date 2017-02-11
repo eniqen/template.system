@@ -12,7 +12,7 @@ public class TemplateField implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
 
 //	@Id
 	@ManyToOne(optional = false)
@@ -59,11 +59,11 @@ public class TemplateField implements Serializable {
 		this.template = template;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 }

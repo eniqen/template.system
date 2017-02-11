@@ -5,6 +5,7 @@ import org.bitbucket.eniqen.TemplateApplication;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
  * @author Mikhail Nemenko {@literal <nemenkoma@gmail.com>}
  */
 @DirtiesContext
+@TestPropertySource(locations = "classpath:test.properties")
 @TestExecutionListeners(DbUnitTestExecutionListener.class)
 @SpringApplicationConfiguration(TemplateApplication.class)
 public abstract class AbstractRepositoryTest extends AbstractJUnit4SpringContextTests {

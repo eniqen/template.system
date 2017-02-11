@@ -15,11 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 
 /**
  * Интеграционные тесты репозитория Полей
@@ -46,6 +43,9 @@ public class FieldRepositoryTest extends AbstractRepositoryTest {
 	@Autowired
 	private FieldRepository fieldRepository;
 
+	/**
+	 * Поиск по существующему идентификатору в базе
+	 */
 	@Test
 	public void findOneWhenExisting() {
 		Optional<Field> field = fieldRepository.findOne(FIELD_1_ID);
@@ -60,43 +60,57 @@ public class FieldRepositoryTest extends AbstractRepositoryTest {
 		assertThat(actual.getDescription(), equalTo(FIELD_1_DESCRIPTION));
 	}
 
+	/**
+	 * Поиск по несуществующему идентификатору
+	 */
 	@Test
 	public void findOneWhenNotExisting() {
 		Optional<Field> field = fieldRepository.findOne(FIELD_NOT_EXIST_ID);
 		assertThat(field.isPresent(), equalTo(false));
 	}
 
+	/**
+	 * Проверка пейджинации
+	 */
 	@Test
 	public void findAllWithPaging() {
 		Page<Field> fields = fieldRepository.findAll(new PageRequest(0, PAGE_SIZE));
 
-		assertThat(fields, is(not(equalTo(null))));
+		assertThat(fields, is(not(nullValue())));
 		assertThat(fields.getTotalElements(), equalTo(3L));
 		assertThat(fields.getTotalPages(), equalTo(1));
 		assertThat(fields.getContent(), hasSize(PAGE_SIZE));
 	}
 
+	/**
+	 * Проверяем создание нового поля
+	 */
 	@Test
 	public void saveNew() {
 		final Field field = new Field(FIELD_TYPE, FIELD_NAME, FIELD_DESCRIPTION);
 		final Field savedField = fieldRepository.save(field);
 		final List<Field> fields = fieldRepository.findAll();
 
-		assertThat(field.getType(), equalTo(savedField.getType()));
-		assertThat(field.getDescription(), equalTo(savedField.getDescription()));
-		assertThat(field.getName(), equalTo(savedField.getName()));
+		assertThat(savedField.getId(), is(not(nullValue())));
+		assertThat(savedField.getType(), equalTo(field.getType()));
+		assertThat(savedField.getDescription(), equalTo(field.getDescription()));
+		assertThat(savedField.getName(), equalTo(field.getName()));
 		assertThat(fields, hasSize(4));
 	}
 
+	/**
+	 * Проверяем удаление по идентификатору
+	 */
 	@Test
 	public void deleteById() {
 		final List<Field> all = fieldRepository.findAll();
 		assertThat(all, hasSize(3));
 
-		fieldRepository.delete(all.get(0).getId());
+		fieldRepository.delete(FIELD_1_ID);
 
 		final List<Field> afterDeleteField = fieldRepository.findAll();
 		assertThat(afterDeleteField, hasSize(2));
+		assertThat(afterDeleteField, hasItem(hasProperty("id", not(equalTo(FIELD_1_ID)))));
 	}
 }
 

@@ -1,5 +1,8 @@
 package org.bitbucket.eniqen.domain;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,8 +13,11 @@ import java.util.Set;
 @Entity
 public class Template extends BaseNamedDictionaryEntry {
 
-	@OneToMany(mappedBy = "template", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "template",
+			cascade = CascadeType.ALL,
+			orphanRemoval = true)
 	@OrderBy(value = "ordinal")
+	@Fetch(FetchMode.JOIN)
 	private Set<TemplateField> templateFields = new HashSet<>();
 
 	public Template() {

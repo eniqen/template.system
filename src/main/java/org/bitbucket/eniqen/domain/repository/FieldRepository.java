@@ -1,6 +1,7 @@
 package org.bitbucket.eniqen.domain.repository;
 
 import org.bitbucket.eniqen.domain.Field;
+import org.bitbucket.eniqen.domain.FieldType;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
