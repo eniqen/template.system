@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dataset>
-    <template id="d77a4774-c25e-4844-bddd-151354d6d8bc" name="TEMPLATE-1" description="DESCRIPTION-1" version="0"/>
-    <template id="f648e92b-aeca-4b99-97e1-2b7930462951" name="TEMPLATE-2" description="DESCRIPTION-2" version="0"/>
-    <template id="cd08ce16-6319-4116-ae64-74f2767eb5e5" name="TEMPLATE-3" description="DESCRIPTION-3" version="0"/>
+    <template id="d77a4774-c25e-4844-bddd-151354d6d8bc"
+              name="TEMPLATE-1"
+              description="DESCRIPTION-1"
+              version="0"/>
+    <template id="f648e92b-aeca-4b99-97e1-2b7930462951"
+              name="TEMPLATE-2"
+              description="DESCRIPTION-2"
+              version="0"/>
+    <template id="cd08ce16-6319-4116-ae64-74f2767eb5e5"
+              name="TEMPLATE-3"
+              description="DESCRIPTION-3"
+              version="0"/>
 </dataset>
