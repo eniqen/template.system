@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+    <document_template_fields document_id="9bf48488-f18b-4ad1-9bf1-008417c2e413"
+                              template_fields_key="1"
+                              template_fields="Сидор"/>
+    <document_template_fields document_id="9bf48488-f18b-4ad1-9bf1-008417c2e413"
+                              template_fields_key="2"
+                              template_fields="Зидан"/>
+    <document_template_fields document_id="9bf48488-f18b-4ad1-9bf1-008417c2e413"
+                              template_fields_key="3"
+                              template_fields="Вася"/>
+
+    <document_template_fields document_id="95b0872e-e41b-45f6-b170-cd1cfdc2a9df"
+                              template_fields_key="1"
+                              template_fields="Петя"/>
+    <document_template_fields document_id="95b0872e-e41b-45f6-b170-cd1cfdc2a9df"
+                              template_fields_key="2"
+                              template_fields="Тетя"/>
+    <document_template_fields document_id="95b0872e-e41b-45f6-b170-cd1cfdc2a9df"
+                              template_fields_key="3"
+                              template_fields="Мотя"/>
+
+    <document_template_fields document_id="8e84cfae-dbcd-4844-816f-b186488ab921"
+                              template_fields_key="4"
+                              template_fields="Привет"/>
+    <document_template_fields document_id="8e84cfae-dbcd-4844-816f-b186488ab921"
+                              template_fields_key="5"
+                              template_fields="Пока"/>
+    <document_template_fields document_id="8e84cfae-dbcd-4844-816f-b186488ab921"
+                              template_fields_key="6"
+                              template_fields="Покедова"/>
+</dataset>

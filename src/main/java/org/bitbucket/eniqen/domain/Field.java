@@ -29,5 +29,21 @@ public class Field extends BaseNamedDictionaryEntry {
 	public void setType(FieldType type) {
 		this.type = type;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Field field = (Field) o;
+
+		return type == field.type;
+
+	}
+
+	@Override
+	public int hashCode() {
+		return type != null ? type.hashCode() : 0;
+	}
 }
 

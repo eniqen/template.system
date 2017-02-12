@@ -63,9 +63,19 @@ public class TemplateRepositoryTest extends AbstractRepositoryTest {
 	@Test
 	public void findAllWithPaging() {
 		final Page<Template> pagingResult = templateRepository.findAll(new PageRequest(0, 3));
-		assertThat(pagingResult, is(not(equalTo(null))));
+		assertThat(pagingResult, is(notNullValue()));
 		assertThat(pagingResult.getTotalPages(), equalTo(1));
 		assertThat(pagingResult.getContent(), hasSize(3));
+	}
+
+	/**
+	 * Поиск всех
+	 */
+	@Test
+	public void findAll() {
+		final List<Template> result = templateRepository.findAll();
+		assertThat(result, is(notNullValue()));
+		assertThat(result, hasSize(3));
 	}
 
 	/**
@@ -132,6 +142,9 @@ public class TemplateRepositoryTest extends AbstractRepositoryTest {
 		assertThat(savedTemplate.getFields(), hasSize(3));
 	}
 
+	/**
+	 *
+	 */
 	@Test
 	public void deleteById() {
 		final List<Template> templates = templateRepository.findAll();

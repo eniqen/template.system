@@ -39,4 +39,20 @@ public class Template extends BaseNamedDictionaryEntry {
 	public void setFields(Set<TemplateField> fields) {
 		this.templateFields = fields;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Template template = (Template) o;
+
+		return templateFields != null ? templateFields.equals(template.templateFields) : template.templateFields == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		return templateFields != null ? templateFields.hashCode() : 0;
+	}
 }

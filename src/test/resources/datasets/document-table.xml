@@ -3,16 +3,13 @@
     <document id="9bf48488-f18b-4ad1-9bf1-008417c2e413"
               name="DOCUMENT-1"
               description="DOCUMENT_DESCRIPTION-1"
-              version="0"
-              template_id="d77a4774-c25e-4844-bddd-151354d6d8bc"/>
+              version="0"/>
     <document id="95b0872e-e41b-45f6-b170-cd1cfdc2a9df"
               name="DOCUMENT-2"
               description="DOCUMENT_DESCRIPTION-2"
-              version="0"
-              template_id="d77a4774-c25e-4844-bddd-151354d6d8bc"/>
+              version="0"/>
     <document id="8e84cfae-dbcd-4844-816f-b186488ab921"
               name="DOCUMENT-3"
               description="DOCUMENT_DESCRIPTION-3"
-              version="0"
-              template_id="d77a4774-c25e-4844-bddd-151354d6d8bc"/>
+              version="0"/>
 </dataset>
