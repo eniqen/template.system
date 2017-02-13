@@ -1,5 +1,7 @@
 package org.bitbucket.eniqen.domain;
 
+import lombok.Builder;
+
 import javax.persistence.MappedSuperclass;
 
 /**
