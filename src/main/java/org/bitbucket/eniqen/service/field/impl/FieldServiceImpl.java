@@ -1,7 +1,6 @@
 package org.bitbucket.eniqen.service.field.impl;
 
-import org.bitbucket.eniqen.common.error.FieldError;
-import org.bitbucket.eniqen.common.exeption.EntityNotFoundExeption;
+import org.bitbucket.eniqen.common.exception.EntityNotFoundException;
 import org.bitbucket.eniqen.domain.Field;
 import org.bitbucket.eniqen.domain.FieldType;
 import org.bitbucket.eniqen.domain.repository.FieldRepository;
@@ -10,13 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.Optional;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static org.bitbucket.eniqen.common.error.FieldError.FIELD_NOT_EXIST;
+import static org.bitbucket.eniqen.common.Guard.CHECK_ARGUMENT;
+import static org.bitbucket.eniqen.common.Guard.CHECK_STRING;
+import static org.bitbucket.eniqen.common.error.FieldError.*;
+import static org.springframework.transaction.annotation.Isolation.REPEATABLE_READ;
 
 /**
  * Реализация сервиса для работы с Полями
@@ -45,32 +46,47 @@ public class FieldServiceImpl implements FieldService {
 	}
 
 	@Override
-    @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Field update(String id, FieldType type, String name, String description) {
-        checkArgument(id != null, FieldError.ID_REQUARED.getStatus());
-
-        Field field = fieldRepository.findOne(id).orElseThrow(() -> new EntityNotFoundExeption(FIELD_NOT_EXIST));
-        field.setType(type);
-        field.setDescription(description);
-        field.setName(name);
-
-        return fieldRepository.save(field);
-    }
-
-	@Override
-	@Transactional(isolation = Isolation.REPEATABLE_READ)
-	public Field create(FieldType type, String name, String description) {
-		return fieldRepository.save(Field.builder()
-                .name(name)
-                .description(description)
-                .type(type)
-                .build());
+	public Collection<Field> findAll() {
+		return fieldRepository.findAll();
 	}
 
 	@Override
-	@Transactional(isolation = Isolation.REPEATABLE_READ)
+	@Transactional(isolation = REPEATABLE_READ)
+	public Field update(String id, FieldType type, String name, String description) {
+
+		CHECK_STRING.check(id, ID_REQUIRED);
+		CHECK_ARGUMENT.check(type, TYPE_REQUIRED);
+		CHECK_STRING.check(name, NAME_REQUIRED);
+
+		Field field = fieldRepository.findOne(id).orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
+		field.setType(type);
+		field.setDescription(description);
+		field.setName(name);
+
+		return fieldRepository.save(field);
+	}
+
+	@Override
+	@Transactional(isolation = REPEATABLE_READ)
+	public Field create(FieldType type, String name, String description) {
+
+		CHECK_ARGUMENT.check(type, TYPE_REQUIRED);
+		CHECK_STRING.check(name, NAME_REQUIRED);
+
+		return fieldRepository.save(Field.builder()
+										 .name(name)
+										 .description(description)
+										 .type(type)
+										 .build());
+	}
+
+	@Override
+	@Transactional(isolation = REPEATABLE_READ)
 	public void delete(String id) {
-        final Field field = this.find(id).orElseThrow(() -> new EntityNotFoundExeption(FIELD_NOT_EXIST));
-        fieldRepository.delete(field.getId());
+
+		CHECK_STRING.check(id, ID_REQUIRED);
+
+		final Field field = this.find(id).orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
+		fieldRepository.delete(field.getId());
 	}
 }

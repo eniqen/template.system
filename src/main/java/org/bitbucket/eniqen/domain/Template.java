@@ -1,5 +1,7 @@
 package org.bitbucket.eniqen.domain;
 
+import lombok.Builder;
+import lombok.Singular;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -13,6 +15,7 @@ import java.util.Set;
 @Entity
 public class Template extends BaseNamedDictionaryEntry {
 
+	@Singular
 	@OneToMany(mappedBy = "template",
 			cascade = CascadeType.ALL,
 			orphanRemoval = true)
@@ -27,6 +30,7 @@ public class Template extends BaseNamedDictionaryEntry {
 		super(name, description);
 	}
 
+	@Builder
 	public Template(String name, String description, Set<TemplateField> templateFields) {
 		this(description, name);
 		this.templateFields = templateFields;

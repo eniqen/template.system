@@ -5,7 +5,11 @@ package org.bitbucket.eniqen.common.error;
  */
 public interface ErrorInfo {
 
-    int getCode();
+    default int getCode(){
+        return 0;
+    }
 
-    String getStatus();
+    default String getStatus(){
+        return "Empty";
+    }
 }

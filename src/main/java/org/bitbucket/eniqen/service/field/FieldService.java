@@ -4,6 +4,7 @@ import org.bitbucket.eniqen.domain.Field;
 import org.bitbucket.eniqen.domain.FieldType;
 import org.springframework.data.domain.Page;
 
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -30,6 +31,13 @@ public interface FieldService {
 	 * @return пейдженированный результат запроса
 	 */
 	Page<Field> findAll(int pageSize, int pageNo);
+
+	/**
+	 * Поиск всех полей
+	 *
+	 * @return список полей
+	 */
+	Collection<Field> findAll();
 
 	/**
 	 * Обновление Поля
