@@ -5,9 +5,10 @@ package org.bitbucket.eniqen.common.error;
  */
 public enum FieldError implements ErrorInfo {
     FIELD_NOT_EXIST("Поле не найдено", 1000),
-    ID_REQUARED("Идентификатор является обязательным параметром", 1001);
+    ID_REQUARED("Идентификатор является обязательным параметром", 1001),
+    FIELD_TYPE_REQUARED("Тип поля является обязательным параметром", 1002);
 
-    FieldError(int code, String status) {
+    FieldError(String status, int code) {
         this.code = code;
         this.status = status;
     }
