@@ -1,9 +1,8 @@
 package org.bitbucket.eniqen.service.template.impl;
 
 import lombok.experimental.var;
-import org.bitbucket.eniqen.common.Guard;
+import lombok.val;
 import org.bitbucket.eniqen.common.exception.EntityNotFoundException;
-import org.bitbucket.eniqen.domain.FieldType;
 import org.bitbucket.eniqen.domain.Template;
 import org.bitbucket.eniqen.domain.TemplateField;
 import org.bitbucket.eniqen.domain.repository.FieldRepository;
@@ -16,12 +15,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toSet;
+import static org.bitbucket.eniqen.common.Guard.CHECK_STRING;
 import static org.bitbucket.eniqen.common.error.TemplateError.*;
 import static org.springframework.transaction.annotation.Isolation.REPEATABLE_READ;
 
@@ -50,10 +49,10 @@ public class TemplateServiceImpl implements TemplateService {
 						   String description,
 						   Optional<Set<TemplateField>> templateFields) {
 
-		Guard.CHECK_STRING.check(name, NAME_REQUIRED);
+		CHECK_STRING.check(name, NAME_REQUIRED);
 		templateFields.ifPresent(this::validateFields);
 
-		var savedTemplate = templateRepository.save(Template.builder()
+		val savedTemplate = templateRepository.save(Template.builder()
 															.name(name)
 															.description(description)
 															.build());
@@ -72,7 +71,7 @@ public class TemplateServiceImpl implements TemplateService {
 						   String description,
 						   Optional<Set<TemplateField>> templateFields) {
 
-		Guard.CHECK_STRING.check(id, ID_REQUIRED);
+		CHECK_STRING.check(id, ID_REQUIRED);
 
 		var template = this.find(id)
 						   .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
@@ -108,9 +107,9 @@ public class TemplateServiceImpl implements TemplateService {
 	@Transactional(isolation = REPEATABLE_READ)
 	public void delete(String id) {
 
-		Guard.CHECK_STRING.check(id, ID_REQUIRED);
+		CHECK_STRING.check(id, ID_REQUIRED);
 
-		var template = this.find(id)
+		val template = this.find(id)
 						   .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
 
 		templateRepository.delete(template.getId());
@@ -124,7 +123,7 @@ public class TemplateServiceImpl implements TemplateService {
 	private void validateFields(Set<TemplateField> templateFields) {
 		if (templateFields != null && !templateFields.isEmpty()) {
 
-			var fieldTypesCount = templateFields.stream()
+			val fieldTypesCount = templateFields.stream()
 												.map(templateField -> templateField.getField().getType())
 												.distinct()
 												.count();
@@ -133,7 +132,7 @@ public class TemplateServiceImpl implements TemplateService {
 				throw new IllegalArgumentException("Не верное колличество обязательных типов полей");
 			}
 
-			var ordinalSet = templateFields.stream()
+			val ordinalSet = templateFields.stream()
 										   .map(TemplateField::getOrdinal)
 										   .collect(toSet());
 

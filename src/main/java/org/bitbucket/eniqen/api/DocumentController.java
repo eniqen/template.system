@@ -1,12 +1,40 @@
 package org.bitbucket.eniqen.api;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.bitbucket.eniqen.service.document.DocumentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
- * Created by sbt-nemenko-ma on 10.02.2017.
+ * @author Mikhail Nemenko {@literal <nemenkoma@gmail.com>}
  */
 @RestController
 @RequestMapping(value = "/documents")
 public class DocumentController {
+
+	private final DocumentService documentService;
+
+	@Autowired
+	public DocumentController(DocumentService documentService) {
+		this.documentService = documentService;
+	}
+
+	@GetMapping(value = "/{id}")
+	public void getById() {
+
+	}
+
+	@GetMapping(value = "/list")
+	public void getAll() {
+
+	}
+
+	@PutMapping(value = "/{id}/update")
+	public void update() {
+
+	}
+
+	@DeleteMapping(value = "/{id}/delete")
+	public void delete() {
+
+	}
 }

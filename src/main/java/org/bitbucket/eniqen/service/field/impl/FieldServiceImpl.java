@@ -1,6 +1,6 @@
 package org.bitbucket.eniqen.service.field.impl;
 
-import lombok.experimental.var;
+import lombok.val;
 import org.bitbucket.eniqen.common.exception.EntityNotFoundException;
 import org.bitbucket.eniqen.domain.Field;
 import org.bitbucket.eniqen.domain.FieldType;
@@ -59,7 +59,7 @@ public class FieldServiceImpl implements FieldService {
 		CHECK_ARGUMENT.check(type, TYPE_REQUIRED);
 		CHECK_STRING.check(name, NAME_REQUIRED);
 
-		var field = fieldRepository.findOne(id)
+		val field = fieldRepository.findOne(id)
 								   .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
 
 		field.setType(type);
@@ -89,7 +89,7 @@ public class FieldServiceImpl implements FieldService {
 
 		CHECK_STRING.check(id, ID_REQUIRED);
 
-		var field = this.find(id)
+		val field = this.find(id)
 						.orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
 
 		fieldRepository.delete(field.getId());

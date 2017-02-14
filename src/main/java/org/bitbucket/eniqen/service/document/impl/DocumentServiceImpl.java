@@ -1,6 +1,7 @@
 package org.bitbucket.eniqen.service.document.impl;
 
 import lombok.experimental.var;
+import lombok.val;
 import org.bitbucket.eniqen.common.exception.EntityArgumentException;
 import org.bitbucket.eniqen.common.exception.EntityNotFoundException;
 import org.bitbucket.eniqen.domain.Document;
@@ -66,7 +67,7 @@ public class DocumentServiceImpl implements DocumentService {
 						   Map<TemplateField, String> templateFields) {
 
 		CHECK_STRING.check(id, ID_REQUIRED);
-		var document = documentRepository.findOne(id)
+		val document = documentRepository.findOne(id)
 										 .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
 
 		CHECK_STRING.check(name, NAME_REQUIRED);
@@ -105,7 +106,7 @@ public class DocumentServiceImpl implements DocumentService {
 
 		CHECK_STRING.check(id, ID_REQUIRED);
 
-		var document = documentRepository.findOne(id)
+		val document = documentRepository.findOne(id)
 										 .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
 
 		documentRepository.delete(document.getId());
@@ -118,7 +119,7 @@ public class DocumentServiceImpl implements DocumentService {
 	 */
 	private void validateTemplateLinks(Stream<TemplateField> templateFieldStream) {
 
-		var templateIdCount = templateFieldStream.map(TemplateField::getTemplate)
+		val templateIdCount = templateFieldStream.map(TemplateField::getTemplate)
 												 .map(Template::getId)
 												 .distinct()
 												 .count();
@@ -133,7 +134,7 @@ public class DocumentServiceImpl implements DocumentService {
 	 */
 	private void validateFieldIds(Stream<TemplateField> templateFieldStream) {
 
-		var isFieldIdValid = templateFieldStream.map(TemplateField::getField)
+		val isFieldIdValid = templateFieldStream.map(TemplateField::getField)
 												.allMatch(field -> field.getId() != null && !field.getId().trim().isEmpty());
 
 		if (!isFieldIdValid) throw new EntityArgumentException(TEMPLATE_NOT_EXIST_FIELDS);
