@@ -73,7 +73,7 @@ public class TemplateServiceImpl implements TemplateService {
 
 		CHECK_STRING.check(id, ID_REQUIRED);
 
-		var template = this.find(id)
+		val template = this.find(id)
 						   .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
 
 		templateFields.ifPresent(this::validateFields);
