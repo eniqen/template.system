@@ -1,5 +1,6 @@
 package org.bitbucket.eniqen.service.template.impl;
 
+import lombok.experimental.var;
 import org.bitbucket.eniqen.common.Guard;
 import org.bitbucket.eniqen.common.exception.EntityNotFoundException;
 import org.bitbucket.eniqen.domain.FieldType;
@@ -52,16 +53,16 @@ public class TemplateServiceImpl implements TemplateService {
 		Guard.CHECK_STRING.check(name, NAME_REQUIRED);
 		templateFields.ifPresent(this::validateFields);
 
-		Template save = templateRepository.save(Template.builder()
-														.name(name)
-														.description(description)
-														.build());
+		var savedTemplate = templateRepository.save(Template.builder()
+															.name(name)
+															.description(description)
+															.build());
 
 		templateFields.ifPresent(tf -> tf.forEach(templateField -> {
-			templateField.setTemplate(save);
+			templateField.setTemplate(savedTemplate);
 		}));
 
-		return templateRepository.save(save);
+		return templateRepository.save(savedTemplate);
 	}
 
 	@Override
@@ -73,8 +74,8 @@ public class TemplateServiceImpl implements TemplateService {
 
 		Guard.CHECK_STRING.check(id, ID_REQUIRED);
 
-		final Template template = this.find(id)
-									  .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
+		var template = this.find(id)
+						   .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
 
 		templateFields.ifPresent(this::validateFields);
 		templateFields.ifPresent(tf -> tf.forEach(templateField -> {
@@ -109,7 +110,9 @@ public class TemplateServiceImpl implements TemplateService {
 
 		Guard.CHECK_STRING.check(id, ID_REQUIRED);
 
-		Template template = this.find(id).orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
+		var template = this.find(id)
+						   .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
+
 		templateRepository.delete(template.getId());
 	}
 
@@ -121,16 +124,18 @@ public class TemplateServiceImpl implements TemplateService {
 	private void validateFields(Set<TemplateField> templateFields) {
 		if (templateFields != null && !templateFields.isEmpty()) {
 
-			Set<FieldType> fieldTypes = templateFields.stream()
-													  .map(templateField -> templateField.getField().getType())
-													  .collect(toSet());
-			if (fieldTypes.size() < 3) {
+			var fieldTypesCount = templateFields.stream()
+												.map(templateField -> templateField.getField().getType())
+												.distinct()
+												.count();
+
+			if (fieldTypesCount < 3) {
 				throw new IllegalArgumentException("Не верное колличество обязательных типов полей");
 			}
 
-			Set<Integer> ordinalSet = templateFields.stream()
-													.map(TemplateField::getOrdinal)
-													.collect(toSet());
+			var ordinalSet = templateFields.stream()
+										   .map(TemplateField::getOrdinal)
+										   .collect(toSet());
 
 			if (ordinalSet.size() < templateFields.size()) {
 				throw new IllegalArgumentException("Неверный индекс полей в шаблоне");
