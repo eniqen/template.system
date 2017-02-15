@@ -1,6 +1,5 @@
 package org.bitbucket.eniqen.service.template.impl;
 
-import lombok.experimental.var;
 import lombok.val;
 import org.bitbucket.eniqen.common.exception.EntityNotFoundException;
 import org.bitbucket.eniqen.domain.Template;

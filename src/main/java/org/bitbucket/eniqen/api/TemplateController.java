@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 
+import static java.util.Collections.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.*;
 
@@ -29,16 +30,25 @@ public class TemplateController {
 		this.templateService = templateService;
 	}
 
-	@PostMapping(value = "/create")
+	@PostMapping(value = "/create",
+                 consumes = APPLICATION_JSON_VALUE,
+                 produces = APPLICATION_JSON_VALUE)
 	public HttpEntity<TemplateDTO> create(@RequestBody TemplateDTO templateDTO) {
-		val template = templateService.create(templateDTO.getName(), templateDTO.getDescription(), null);
-		return ok(new TemplateDTO());
+
+		val template = this.templateService.create(templateDTO.getName(),
+                                                   templateDTO.getDescription(),
+                                                   null);
+		return ok(TemplateDTO.builder()
+                             .id(template.getId())
+                             .name(template.getName())
+                             .description(template.getDescription())
+                             .build());
 	}
 
 	@GetMapping(value = "/{id}",
 				produces = APPLICATION_JSON_VALUE)
 	public HttpEntity<TemplateDTO> get(@PathVariable("id") String id) {
-		return templateService.find(id)
+		return this.templateService.find(id)
 							  .map(template -> ok(TemplateDTO.builder()
 															 .id(template.getId())
 															 .name(template.getName())
@@ -52,10 +62,12 @@ public class TemplateController {
 	public HttpEntity<CollectionDTO<TemplateDTO>> getAll(@RequestParam("pageSize") int pageSize,
 														 @RequestParam("pageNum") int pageNum) {
 
-		val pageTemplates = templateService.findAll(pageNum, pageSize);
+		val pageTemplates = this.templateService.findAll(pageNum, pageSize);
 
-		return ok(new CollectionDTO<>(Collections.singletonList(new TemplateDTO()),
-									  pageTemplates.getTotalElements()));
+		return ok(CollectionDTO.<TemplateDTO>builder()
+											.items(singletonList(new TemplateDTO()))
+											.count(pageTemplates.getTotalElements())
+											.build());
 
 	}
 
@@ -65,11 +77,16 @@ public class TemplateController {
 	public HttpEntity<TemplateDTO> update(@RequestBody TemplateDTO templateDTO,
 										  @PathVariable("id") String id) {
 		val template = templateService.update(id, templateDTO.getName(), templateDTO.getDescription(), null);
-		return ok(new TemplateDTO());
+		return ok(TemplateDTO.builder()
+                             .id(template.getId())
+                             .name(template.getName())
+                             .description(template.getDescription())
+                             .build());
 	}
 
 	@DeleteMapping(value = "/{id}/delete")
-	public HttpEntity delete() {
+	public HttpEntity delete(@PathVariable("id") String id) {
+		this.templateService.delete(id);
 		return ok().build();
 	}
 }
