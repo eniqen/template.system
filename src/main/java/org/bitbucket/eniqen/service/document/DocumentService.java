@@ -1,6 +1,5 @@
 package org.bitbucket.eniqen.service.document;
 
-import lombok.NonNull;
 import org.bitbucket.eniqen.domain.Document;
 import org.bitbucket.eniqen.domain.TemplateField;
 import org.springframework.data.domain.Page;
@@ -51,7 +50,7 @@ public interface DocumentService {
 	Document update(final String id,
 					final String name,
 					final String description,
-					@NonNull final Map<TemplateField, String> templateFields);
+					final Map<TemplateField, String> templateFields);
 
 	/**
 	 * Создание поля по переданным параметрам
@@ -62,7 +61,7 @@ public interface DocumentService {
 	 */
 	Document create(final String name,
 					final String description,
-					@NonNull final Map<TemplateField, String> templateFields);
+					final Map<TemplateField, String> templateFields);
 
 	/**
 	 * Удаление документа по его идентификатору

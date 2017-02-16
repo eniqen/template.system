@@ -1,7 +1,5 @@
 package org.bitbucket.eniqen.service.document.impl;
 
-import lombok.experimental.var;
-import lombok.val;
 import org.bitbucket.eniqen.common.exception.EntityArgumentException;
 import org.bitbucket.eniqen.common.exception.EntityNotFoundException;
 import org.bitbucket.eniqen.domain.Document;
@@ -67,8 +65,8 @@ public class DocumentServiceImpl implements DocumentService {
 						   Map<TemplateField, String> templateFields) {
 
 		CHECK_STRING.check(id, ID_REQUIRED);
-		val document = documentRepository.findOne(id)
-										 .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
+		Document document = documentRepository.findOne(id)
+											  .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
 
 		CHECK_STRING.check(name, NAME_REQUIRED);
 		document.setName(name);
@@ -93,11 +91,7 @@ public class DocumentServiceImpl implements DocumentService {
 		validateTemplateLinks(templateFields.keySet().stream());
 		validateFieldIds(templateFields.keySet().stream());
 
-		return documentRepository.save(Document.builder()
-											   .name(name)
-											   .description(description)
-											   .templateFields(templateFields)
-											   .build());
+		return documentRepository.save(new Document(name, description, templateFields));
 	}
 
 	@Override
@@ -106,8 +100,8 @@ public class DocumentServiceImpl implements DocumentService {
 
 		CHECK_STRING.check(id, ID_REQUIRED);
 
-		val document = documentRepository.findOne(id)
-										 .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
+		Document document = documentRepository.findOne(id)
+											  .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
 
 		documentRepository.delete(document.getId());
 	}
@@ -119,10 +113,10 @@ public class DocumentServiceImpl implements DocumentService {
 	 */
 	private void validateTemplateLinks(Stream<TemplateField> templateFieldStream) {
 
-		val templateIdCount = templateFieldStream.map(TemplateField::getTemplate)
-												 .map(Template::getId)
-												 .distinct()
-												 .count();
+		long templateIdCount = templateFieldStream.map(TemplateField::getTemplate)
+												  .map(Template::getId)
+												  .distinct()
+												  .count();
 
 		if (templateIdCount != 1) throw new EntityArgumentException(INVALID_LINK_TEMPLATE);
 	}
@@ -134,8 +128,8 @@ public class DocumentServiceImpl implements DocumentService {
 	 */
 	private void validateFieldIds(Stream<TemplateField> templateFieldStream) {
 
-		val isFieldIdValid = templateFieldStream.map(TemplateField::getField)
-												.allMatch(field -> field.getId() != null && !field.getId().trim().isEmpty());
+		boolean isFieldIdValid = templateFieldStream.map(TemplateField::getField)
+													.allMatch(field -> field.getId() != null && !field.getId().trim().isEmpty());
 
 		if (!isFieldIdValid) throw new EntityArgumentException(TEMPLATE_NOT_EXIST_FIELDS);
 	}

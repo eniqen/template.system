@@ -1,7 +1,5 @@
 package org.bitbucket.eniqen.domain;
 
-import lombok.Builder;
-import lombok.Singular;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -24,13 +22,11 @@ public class Document extends BaseNamedDictionaryEntry {
         super(name, description);
     }
 
-    @Builder
     public Document(String name, String description, Map<TemplateField, String> templateFields) {
         super(name, description);
         this.templateFields = templateFields;
     }
 
-    @Singular
     @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name = "id")
     @Cascade(value = CascadeType.ALL)

@@ -1,6 +1,5 @@
 package org.bitbucket.eniqen.service.template.impl;
 
-import lombok.val;
 import org.bitbucket.eniqen.common.exception.EntityNotFoundException;
 import org.bitbucket.eniqen.domain.Template;
 import org.bitbucket.eniqen.domain.TemplateField;
@@ -17,7 +16,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
-import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toSet;
 import static org.bitbucket.eniqen.common.Guard.CHECK_STRING;
 import static org.bitbucket.eniqen.common.error.TemplateError.*;
@@ -46,19 +44,14 @@ public class TemplateServiceImpl implements TemplateService {
 	@Transactional(isolation = REPEATABLE_READ)
 	public Template create(String name,
 						   String description,
-						   Optional<Set<TemplateField>> templateFields) {
+						   Set<TemplateField> templateFields) {
 
 		CHECK_STRING.check(name, NAME_REQUIRED);
-		templateFields.ifPresent(this::validateFields);
+		validateFields(templateFields);
 
-		val savedTemplate = templateRepository.save(Template.builder()
-															.name(name)
-															.description(description)
-															.build());
+		Template savedTemplate = templateRepository.save(new Template(name, description, templateFields));
 
-		templateFields.ifPresent(tf -> tf.forEach(templateField -> {
-			templateField.setTemplate(savedTemplate);
-		}));
+		templateFields.forEach(templateField -> templateField.setTemplate(savedTemplate));
 
 		return templateRepository.save(savedTemplate);
 	}
@@ -68,23 +61,18 @@ public class TemplateServiceImpl implements TemplateService {
 	public Template update(String id,
 						   String name,
 						   String description,
-						   Optional<Set<TemplateField>> templateFields) {
+						   Set<TemplateField> templateFields) {
 
 		CHECK_STRING.check(id, ID_REQUIRED);
 
-		val template = this.find(id)
-						   .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
+		Template template = this.find(id)
+								.orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
 
-		templateFields.ifPresent(this::validateFields);
-		templateFields.ifPresent(tf -> tf.forEach(templateField -> {
-			templateField.setTemplate(template);
-		}));
+		validateFields(templateFields);
 
-		return templateRepository.save(Template.builder()
-											   .name(name)
-											   .description(description)
-											   .templateFields(templateFields.orElse(emptySet()))
-											   .build());
+		templateFields.forEach(templateField -> templateField.setTemplate(template));
+
+		return templateRepository.save(new Template(name, description, templateFields));
 	}
 
 	@Override
@@ -108,8 +96,8 @@ public class TemplateServiceImpl implements TemplateService {
 
 		CHECK_STRING.check(id, ID_REQUIRED);
 
-		val template = this.find(id)
-						   .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
+		Template template = this.find(id)
+								.orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
 
 		templateRepository.delete(template.getId());
 	}
@@ -122,18 +110,18 @@ public class TemplateServiceImpl implements TemplateService {
 	private void validateFields(Set<TemplateField> templateFields) {
 		if (templateFields != null && !templateFields.isEmpty()) {
 
-			val fieldTypesCount = templateFields.stream()
-												.map(templateField -> templateField.getField().getType())
-												.distinct()
-												.count();
+			long fieldTypesCount = templateFields.stream()
+												 .map(templateField -> templateField.getField().getType())
+												 .distinct()
+												 .count();
 
 			if (fieldTypesCount < 3) {
 				throw new IllegalArgumentException("Не верное колличество обязательных типов полей");
 			}
 
-			val ordinalSet = templateFields.stream()
-										   .map(TemplateField::getOrdinal)
-										   .collect(toSet());
+			Set<Integer> ordinalSet = templateFields.stream()
+													.map(TemplateField::getOrdinal)
+													.collect(toSet());
 
 			if (ordinalSet.size() < templateFields.size()) {
 				throw new IllegalArgumentException("Неверный индекс полей в шаблоне");

@@ -7,7 +7,8 @@ public enum TemplateError implements ErrorInfo {
 
 	NOT_EXIST("Шаблон не найден", 2000),
 	ID_REQUIRED("Идентификатор является обязательным параметром", 2001),
-	NAME_REQUIRED("Имя шаблона является обязательным параметром", 2002);
+	NAME_REQUIRED("Имя шаблона является обязательным параметром", 2002),
+	FIELDS_REQUIRED("Шаблон не может быть создан без полей", 2003);
 
 	private final String status;
 	private final int code;

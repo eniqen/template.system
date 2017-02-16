@@ -1,6 +1,5 @@
 package org.bitbucket.eniqen.service.field.impl;
 
-import lombok.val;
 import org.bitbucket.eniqen.common.exception.EntityNotFoundException;
 import org.bitbucket.eniqen.domain.Field;
 import org.bitbucket.eniqen.domain.FieldType;
@@ -59,8 +58,8 @@ public class FieldServiceImpl implements FieldService {
 		CHECK_ARGUMENT.check(type, TYPE_REQUIRED);
 		CHECK_STRING.check(name, NAME_REQUIRED);
 
-		val field = fieldRepository.findOne(id)
-								   .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
+		Field field = fieldRepository.findOne(id)
+									 .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
 
 		field.setType(type);
 		field.setDescription(description);
@@ -76,11 +75,7 @@ public class FieldServiceImpl implements FieldService {
 		CHECK_ARGUMENT.check(type, TYPE_REQUIRED);
 		CHECK_STRING.check(name, NAME_REQUIRED);
 
-		return fieldRepository.save(Field.builder()
-										 .name(name)
-										 .description(description)
-										 .type(type)
-										 .build());
+		return fieldRepository.save(new Field(type, name, description));
 	}
 
 	@Override
@@ -89,8 +84,8 @@ public class FieldServiceImpl implements FieldService {
 
 		CHECK_STRING.check(id, ID_REQUIRED);
 
-		val field = this.find(id)
-						.orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
+		Field field = this.find(id)
+						  .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST));
 
 		fieldRepository.delete(field.getId());
 	}

@@ -23,7 +23,7 @@ public interface TemplateService {
 	 */
 	Template create(String name,
 					String description,
-					Optional<Set<TemplateField>> templateFields);
+					Set<TemplateField> templateFields);
 
 	/**
 	 * Метод обновления шаблона
@@ -37,7 +37,7 @@ public interface TemplateService {
 	Template update(String id,
 					String name,
 					String description,
-					Optional<Set<TemplateField>> templateFields);
+					Set<TemplateField> templateFields);
 
 	/**
 	 * Получения постраничного результата

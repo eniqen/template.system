@@ -1,12 +1,8 @@
 package org.bitbucket.eniqen.domain;
 
-import lombok.Builder;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-
 
 /**
  * @author Mikhail Nemenko {@literal <nemenkoma@gmail.com>}
@@ -17,7 +13,6 @@ public class Field extends BaseNamedDictionaryEntry {
 	@Enumerated(EnumType.STRING)
 	private FieldType type;
 
-	@Builder
 	public Field(FieldType type, String name, String description) {
 		super(name, description);
 		this.type = type;
@@ -45,6 +40,14 @@ public class Field extends BaseNamedDictionaryEntry {
 	@Override
 	public int hashCode() {
 		return type != null ? type.hashCode() : 0;
+	}
+
+	public String getName() {
+		return super.getName();
+	}
+
+	public String getDescription() {
+		return super.getDescription();
 	}
 }
 
