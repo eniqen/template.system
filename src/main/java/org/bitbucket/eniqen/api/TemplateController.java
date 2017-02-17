@@ -83,7 +83,13 @@ public class TemplateController {
 				produces = APPLICATION_JSON_VALUE)
 	public HttpEntity<TemplateDTO> update(@RequestBody TemplateDTO templateDTO,
 										  @PathVariable("id") String id) {
-		Template template = templateService.update(id, templateDTO.getName(), templateDTO.getDescription(), null);
+
+		final Set<TemplateField> templateFields = FieldMapper.INSTANCE.toTemplateFields(templateDTO.getFields());
+
+		final Template template = templateService.update(id,
+														 templateDTO.getName(),
+														 templateDTO.getDescription(),
+														 templateFields);
 		return ok(TemplateMapper.INSTANCE.toDto(template));
 	}
 

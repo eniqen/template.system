@@ -11,12 +11,12 @@ public class FieldDTO {
 	private String name;
 	private String description;
 	private String value;
-	private int order;
+	private Integer order;
 
 	public FieldDTO() {
 	}
 
-	public FieldDTO(String id, FieldType type, String name, String description, String value, int order) {
+	public FieldDTO(String id, FieldType type, String name, String description, String value, Integer order) {
 		this.id = id;
 		this.type = type;
 		this.name = name;
@@ -45,7 +45,7 @@ public class FieldDTO {
 		return value;
 	}
 
-	public int getOrder() {
+	public Integer getOrder() {
 		return order;
 	}
 
@@ -69,7 +69,7 @@ public class FieldDTO {
 		this.value = value;
 	}
 
-	public void setOrder(int order) {
+	public void setOrder(Integer order) {
 		this.order = order;
 	}
 }

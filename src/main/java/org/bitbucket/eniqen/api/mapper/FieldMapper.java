@@ -15,24 +15,26 @@ import java.util.Set;
 @Mapper
 public interface FieldMapper {
 
-    FieldMapper INSTANCE = Mappers.getMapper(FieldMapper.class);
+	FieldMapper INSTANCE = Mappers.getMapper(FieldMapper.class);
 
-    Field toEntity(FieldDTO fieldDTO);
+	Field toEntity(FieldDTO fieldDTO);
 
-    FieldDTO toDto(Field field);
+	FieldDTO toDto(Field field);
 
-    @Mappings({@Mapping(target = "field.name", source = "name"),
-               @Mapping(target = "field.description", source = "description"),
-               @Mapping(target = "field.type", source = "type"),
-               @Mapping(target = "ordinal", source = "order")})
-    TemplateField toTemplateField(FieldDTO fieldDTO);
+	@Mappings({@Mapping(target = "field.name", source = "name"),
+			   @Mapping(target = "field.description", source = "description"),
+			   @Mapping(target = "field.id", source = "id"),
+			   @Mapping(target = "field.type", source = "type"),
+			   @Mapping(target = "id", ignore = true),
+			   @Mapping(target = "ordinal", source = "order")})
+	TemplateField toTemplateField(FieldDTO fieldDTO);
 
-    @InheritInverseConfiguration
-    FieldDTO templateFieldToFieldDto(TemplateField templateField);
+	@InheritInverseConfiguration
+	FieldDTO templateFieldToFieldDto(TemplateField templateField);
 
-    @IterableMapping(qualifiedByName = "toTemplateField")
-    Set<TemplateField> toTemplateFields(List<FieldDTO> fields);
+	@IterableMapping(qualifiedByName = "toTemplateField")
+	Set<TemplateField> toTemplateFields(List<FieldDTO> fields);
 
-    @InheritInverseConfiguration
-    List<FieldDTO> toFieldsDto(Set<TemplateField> fields);
+	@InheritInverseConfiguration
+	List<FieldDTO> toFieldsDto(Set<TemplateField> fields);
 }
