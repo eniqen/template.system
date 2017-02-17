@@ -26,9 +26,11 @@ import static org.springframework.http.ResponseEntity.ok;
  * @author Mikhail Nemenko {@literal <nemenkoma@gmail.com>}
  */
 @RestController
-@RequestMapping(value = "/templates")
+@RequestMapping(TemplateController.URL)
 public class TemplateController {
-	// FIXME: 14.02.2017 Мапперы
+
+	static final String URL = "/templates";
+
 	private final TemplateService templateService;
 	private final FieldService fieldService;
 
