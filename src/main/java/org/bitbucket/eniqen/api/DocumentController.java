@@ -2,14 +2,27 @@ package org.bitbucket.eniqen.api;
 
 import org.bitbucket.eniqen.api.dto.CollectionDTO;
 import org.bitbucket.eniqen.api.dto.DocumentDTO;
+import org.bitbucket.eniqen.api.dto.FieldDTO;
+import org.bitbucket.eniqen.api.dto.TemplateDTO;
 import org.bitbucket.eniqen.api.mapper.DocumentMapper;
+import org.bitbucket.eniqen.api.mapper.FieldMapper;
+import org.bitbucket.eniqen.api.mapper.TemplateMapper;
 import org.bitbucket.eniqen.domain.Document;
+import org.bitbucket.eniqen.domain.Field;
+import org.bitbucket.eniqen.domain.Template;
+import org.bitbucket.eniqen.domain.TemplateField;
 import org.bitbucket.eniqen.service.document.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.ok;
@@ -18,9 +31,10 @@ import static org.springframework.http.ResponseEntity.ok;
  * @author Mikhail Nemenko {@literal <nemenkoma@gmail.com>}
  */
 @RestController
-@RequestMapping(value = "/documents")
+@RequestMapping(DocumentController.URL)
 public class DocumentController {
 
+	static final String URL = "/documents";
 	private final DocumentService documentService;
 
 	@Autowired
@@ -39,10 +53,48 @@ public class DocumentController {
 				 consumes = APPLICATION_JSON_VALUE)
 	public HttpEntity<DocumentDTO> create(@RequestBody DocumentDTO documentDTO) {
 
-		Document document = this.documentService.create(documentDTO.getName(),
-														documentDTO.getDescription(),
-														null);
-		return ok(DocumentMapper.INSTANCE.toDto(document));
+		final TemplateDTO templateDTO = documentDTO.getTemplate();
+		final Map<TemplateField, String> templateFields = templateDTO.getFields()
+																	 .stream()
+																	 .collect(toMap(FieldMapper.INSTANCE::toTemplateField,
+																					FieldDTO::getValue));
+		templateFields.keySet().forEach(templateField -> {
+			final Template template = TemplateMapper.INSTANCE.toEntity(templateDTO);
+			templateField.setTemplate(template);
+		});
+
+		final Document document = this.documentService.create(documentDTO.getName(),
+															  documentDTO.getDescription(),
+															  templateFields);
+
+
+		final List<FieldDTO> fields = document.getFieldValues()
+											  .entrySet()
+											  .stream()
+											  .map(entry -> {
+												  final TemplateField key = entry.getKey();
+												  final Field field = key.getField();
+												  return new FieldDTO(field.getId(),
+																	  field.getType(),
+																	  field.getName(),
+																	  field.getDescription(),
+																	  entry.getValue(),
+																	  key.getOrdinal());
+											  }).collect(toList());
+
+		final Optional<TemplateDTO> savedTemplateDTO = document.getFieldValues().keySet()
+															   .stream()
+															   .findFirst()
+															   .map(templateField -> new TemplateDTO(templateField.getTemplate().getId(),
+																									 templateField.getTemplate().getName(),
+																									 templateField.getTemplate().getDescription(),
+																									 fields));
+
+		DocumentDTO savedDocumentDTO = new DocumentDTO(document.getId(),
+													   savedTemplateDTO.orElse(null),
+													   document.getName(),
+													   document.getDescription());
+		return ok(savedDocumentDTO);
 	}
 
 	/**

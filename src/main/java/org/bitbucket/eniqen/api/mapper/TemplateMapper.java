@@ -2,8 +2,8 @@ package org.bitbucket.eniqen.api.mapper;
 
 import org.bitbucket.eniqen.api.dto.TemplateDTO;
 import org.bitbucket.eniqen.domain.Template;
-import org.mapstruct.IterableMapping;
-import org.mapstruct.Mapper;
+import org.bitbucket.eniqen.domain.TemplateField;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -19,6 +19,11 @@ public interface TemplateMapper {
 	TemplateDTO toDto(Template template);
 
 	Template toEntity(TemplateDTO templateDTO);
+
+	@Mappings({@Mapping(target = "template.id", source = "id"),
+			   @Mapping(target = "template.name", source = "name"),
+			   @Mapping(target = "template.description", source = "description")})
+	TemplateField toTemplateField(TemplateDTO templateDTO);
 
 	@IterableMapping(qualifiedByName = "toDto")
 	List<TemplateDTO> toListDto(List<Template> templates);

@@ -8,7 +8,6 @@ import org.springframework.data.repository.Repository;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * @author Mikhail Nemenko {@literal <nemenkoma@gmail.com>}

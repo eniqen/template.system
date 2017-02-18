@@ -72,7 +72,7 @@ public class TemplateMapperTest {
 	}
 
 	@Test
-	public void test() {
+	public void testTemplateToTemplateDto() {
 		final TemplateDTO templateDTO = TemplateMapper.INSTANCE.toDto(template);
 
 		assertThat(templateDTO.getId(), equalTo(template.getId()));
@@ -91,5 +91,9 @@ public class TemplateMapperTest {
 			assertThat(fieldDto.getValue(), nullValue());
 			assertThat(fieldDto.getOrder(), notNullValue());
 		});
+
+		final Template template = TemplateMapper.INSTANCE.toEntity(templateDTO);
+		System.out.println(template);
 	}
+
 }

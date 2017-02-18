@@ -1,11 +1,13 @@
 package org.bitbucket.eniqen.service.document.impl;
 
+import org.bitbucket.eniqen.common.error.DocumentError;
 import org.bitbucket.eniqen.common.exception.EntityArgumentException;
 import org.bitbucket.eniqen.common.exception.EntityNotFoundException;
 import org.bitbucket.eniqen.domain.Document;
 import org.bitbucket.eniqen.domain.Template;
 import org.bitbucket.eniqen.domain.TemplateField;
 import org.bitbucket.eniqen.domain.repository.DocumentRepository;
+import org.bitbucket.eniqen.domain.repository.TemplateFieldRepository;
 import org.bitbucket.eniqen.domain.repository.TemplateRepository;
 import org.bitbucket.eniqen.service.document.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.toMap;
 import static org.bitbucket.eniqen.common.Guard.CHECK_STRING;
 import static org.bitbucket.eniqen.common.error.DocumentError.*;
 import static org.springframework.transaction.annotation.Isolation.REPEATABLE_READ;
@@ -34,12 +37,15 @@ public class DocumentServiceImpl implements DocumentService {
 
 	private final DocumentRepository documentRepository;
 	private final TemplateRepository templateRepository;
+	private final TemplateFieldRepository templateFieldRepository;
 
 	@Autowired
 	public DocumentServiceImpl(DocumentRepository documentRepository,
-							   TemplateRepository templateRepository) {
+							   TemplateRepository templateRepository,
+							   TemplateFieldRepository templateFieldRepository) {
 		this.documentRepository = documentRepository;
 		this.templateRepository = templateRepository;
+		this.templateFieldRepository = templateFieldRepository;
 	}
 
 	@Override
@@ -88,10 +94,17 @@ public class DocumentServiceImpl implements DocumentService {
 
 		CHECK_STRING.check(name, NAME_REQUIRED);
 
-		validateTemplateLinks(templateFields.keySet().stream());
-		validateFieldIds(templateFields.keySet().stream());
+		final Map<TemplateField, String> fields = templateFields.entrySet()
+																.stream()
+																.collect(toMap(o -> templateFieldRepository.findByTemplateIdAndFieldId(o.getKey().getTemplate().getId(),
+																																	   o.getKey().getField().getId())
+																										   .orElseThrow(() -> new EntityNotFoundException(DocumentError.NOT_EXIST)),
+																			   Map.Entry::getValue));
 
-		return documentRepository.save(new Document(name, description, templateFields));
+		validateTemplateLinks(fields.keySet().stream());
+		validateFieldIds(fields.keySet().stream());
+
+		return documentRepository.save(new Document(name, description, fields));
 	}
 
 	@Override

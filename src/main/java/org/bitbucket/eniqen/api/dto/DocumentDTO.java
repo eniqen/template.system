@@ -5,16 +5,16 @@ package org.bitbucket.eniqen.api.dto;
  */
 public class DocumentDTO {
 	private String id;
-	private TemplateDTO templateDTO;
+	private TemplateDTO template;
 	private String name;
 	private String description;
 
 	public DocumentDTO() {
 	}
 
-	public DocumentDTO(String id, TemplateDTO templateDTO, String name, String description) {
+	public DocumentDTO(String id, TemplateDTO template, String name, String description) {
 		this.id = id;
-		this.templateDTO = templateDTO;
+		this.template = template;
 		this.name = name;
 		this.description = description;
 	}
@@ -27,12 +27,12 @@ public class DocumentDTO {
 		this.id = id;
 	}
 
-	public TemplateDTO getTemplateDTO() {
-		return templateDTO;
+	public TemplateDTO getTemplate() {
+		return template;
 	}
 
-	public void setTemplateDTO(TemplateDTO templateDTO) {
-		this.templateDTO = templateDTO;
+	public void setTemplate(TemplateDTO template) {
+		this.template = template;
 	}
 
 	public String getName() {
