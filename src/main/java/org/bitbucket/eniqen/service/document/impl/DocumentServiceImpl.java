@@ -98,7 +98,7 @@ public class DocumentServiceImpl implements DocumentService {
 																.stream()
 																.collect(toMap(o -> templateFieldRepository.findByTemplateIdAndFieldId(o.getKey().getTemplate().getId(),
 																																	   o.getKey().getField().getId())
-																										   .orElseThrow(() -> new EntityNotFoundException(DocumentError.NOT_EXIST)),
+																										   .<EntityNotFoundException>orElseThrow(() -> new EntityNotFoundException(DocumentError.NOT_EXIST)),
 																			   Map.Entry::getValue));
 
 		validateTemplateLinks(fields.keySet().stream());
