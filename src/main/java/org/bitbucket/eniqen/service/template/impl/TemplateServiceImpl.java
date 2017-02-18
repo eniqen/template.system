@@ -1,6 +1,7 @@
 package org.bitbucket.eniqen.service.template.impl;
 
 import org.bitbucket.eniqen.common.exception.EntityNotFoundException;
+import org.bitbucket.eniqen.domain.Field;
 import org.bitbucket.eniqen.domain.Template;
 import org.bitbucket.eniqen.domain.TemplateField;
 import org.bitbucket.eniqen.domain.repository.FieldRepository;
@@ -49,9 +50,15 @@ public class TemplateServiceImpl implements TemplateService {
 		CHECK_STRING.check(name, NAME_REQUIRED);
 		validateFields(templateFields);
 
-		Template savedTemplate = templateRepository.save(new Template(name, description, templateFields));
+		Template savedTemplate = templateRepository.save(new Template(name, description));
 
-		templateFields.forEach(templateField -> templateField.setTemplate(savedTemplate));
+        templateFields.forEach(templateField -> {
+            final Field savedField = fieldRepository.save(templateField.getField());
+
+            templateField.setTemplate(savedTemplate);
+            templateField.setField(savedField);
+        });
+        savedTemplate.setFields(templateFields);
 
 		return templateRepository.save(savedTemplate);
 	}

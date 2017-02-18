@@ -1,10 +1,10 @@
 package org.bitbucket.eniqen.api;
 
 import org.bitbucket.eniqen.api.dto.CollectionDTO;
+import org.bitbucket.eniqen.api.dto.FieldDTO;
 import org.bitbucket.eniqen.api.dto.TemplateDTO;
 import org.bitbucket.eniqen.api.mapper.FieldMapper;
 import org.bitbucket.eniqen.api.mapper.TemplateMapper;
-import org.bitbucket.eniqen.common.exception.EntityArgumentException;
 import org.bitbucket.eniqen.domain.Template;
 import org.bitbucket.eniqen.domain.TemplateField;
 import org.bitbucket.eniqen.service.field.FieldService;
@@ -14,10 +14,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.Set;
 
-import static java.util.Optional.ofNullable;
-import static org.bitbucket.eniqen.common.error.TemplateError.FIELDS_REQUIRED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.ok;
@@ -45,20 +44,15 @@ public class TemplateController {
 				 produces = APPLICATION_JSON_VALUE)
 	public HttpEntity<TemplateDTO> create(@RequestBody TemplateDTO templateDTO) {
 
-		final Set<TemplateField> templateFields = ofNullable(templateDTO.getFields())
-				.map(FieldMapper.INSTANCE::toTemplateFields)
-				.orElseThrow(() -> new EntityArgumentException(FIELDS_REQUIRED));
+        Set<TemplateField> templateFields = FieldMapper.INSTANCE.toTemplateFields(templateDTO.getFields());
 
-		templateFields.stream()
-					  .map(TemplateField::getField)
-					  .peek(field -> fieldService.create(field.getType(),
-														 field.getName(),
-														 field.getDescription()));
+        Template savedTemplate = this.templateService.create(templateDTO.getName(),
+                                                             templateDTO.getDescription(),
+                                                             templateFields);
 
-		Template savedTemplate = this.templateService.create(templateDTO.getName(),
-															 templateDTO.getDescription(),
-															 templateFields);
-		return ok(TemplateMapper.INSTANCE.toDto(savedTemplate));
+        TemplateDTO returnTemplateDTO = TemplateMapper.INSTANCE.toDto(savedTemplate);
+        returnTemplateDTO.getFields().sort(Comparator.comparingInt(FieldDTO::getOrder));
+		return ok(returnTemplateDTO);
 	}
 
 	@GetMapping(value = "/{id}",
