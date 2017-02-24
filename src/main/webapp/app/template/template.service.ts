@@ -1,12 +1,14 @@
 import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
+import {Http, Headers, URLSearchParams} from "@angular/http";
 import {Template} from "../entity/Template";
 import {GenericCollection} from "../entity/GenericCollection";
 
-@Injectable
+import 'rxjs/add/operator/toPromise';
+
+@Injectable()
 export class TemplateService {
 
-    private headers = {'Content-Type': 'application/json'};
+    private headers = new Headers({'Content-Type': 'application/json'});
     private templateUrl = '/templates';
 
     constructor(private http: Http) {
@@ -14,15 +16,19 @@ export class TemplateService {
 
     getTemplate(id: string): Promise<Template> {
         const url = `${this.templateUrl}/${id}`;
-        return this.htpp.get(url)
+        return this.http.get(url)
             .toPromise()
             .then(response => response.json().data as Template)
             .catch(this.handleError);
     }
 
     getTemplates(pageSize: number, pageNum: number): Promise<GenericCollection<Template>> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('pageSize', pageSize.toString());
+        params.set('pageNum', pageNum.toString());
+
         const url = `${this.templateUrl}/list`;
-        return this.http.get(url, {'pageSize': pageSize, 'pageNum': pageNum})
+        return this.http.get(url, {search: params})
             .toPromise()
             .then(response => response.json().data as GenericCollection<Template>)
             .catch(this.handleError);
@@ -38,7 +44,7 @@ export class TemplateService {
 
     create(template: Template): Promise<Template> {
         const url = `${this.templateUrl}/create`;
-        return this.http(url, Json.stringify(template), {headers: this.headers})
+        return this.http.post(url, JSON.stringify(template), {headers: this.headers})
             .toPromise()
             .then(response => response.json().data as Template)
             .catch(this.handleError);
@@ -46,7 +52,7 @@ export class TemplateService {
 
     update(template: Template): Promise<Template> {
         const url = `${this.templateUrl}/${template.id}/update`;
-        return this.http(url, Json.stringify(template), {headers: this.headers})
+        return this.http.put(url, JSON.stringify(template), {headers: this.headers})
             .toPromise()
             .then(() => template)
             .catch(this.handleError);

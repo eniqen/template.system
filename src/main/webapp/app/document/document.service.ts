@@ -1,12 +1,12 @@
 import {Injectable} from "@angular/core";
-import {Http, Headers} from "@angular/http";
+import {Http, Headers, URLSearchParams} from "@angular/http";
 
 import "rxjs/operator/toPromise";
 
 import {Document} from "../entity/Document";
 import {GenericCollection} from "../entity/GenericCollection";
 
-@Injectable
+@Injectable()
 export class DocumentService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
@@ -19,31 +19,35 @@ export class DocumentService {
         const url = `${this.documentUrl}/${id}`;
         return this.http.get(url)
             .toPromise()
-            .then(()=> response.json().data as Document)
+            .then(response => response.json().data as Document)
             .catch(this.handleError);
     }
 
     getDocuments(pageNum: number, pageSize: number): Promise<GenericCollection<Document>> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('pageSize', pageSize.toString());
+        params.set('pageNum', pageNum.toString());
+
         const url = `${this.documentUrl}/list`;
-        return this.http.get(url)
+        return this.http.get(url, {search: params})
             .toPromise()
             .then(response => response.json().data as GenericCollection<Document>)
-            .catch(this.errorHandler);
+            .catch(this.handleError);
     }
 
     create(document: Document): Promise<Document> {
         const url = `${this.documentUrl}/create`;
-        return this.http.post(url, Json.stringify(document), {headers: this.headers})
+        return this.http.post(url, JSON.stringify(document), {headers: this.headers})
             .toPromise()
             .then(response => response.json().data as Document)
             .catch(this.handleError);
     }
 
     update(document: Document): Promise<Document> {
-        const url = `${this.documentUrl}/${id}/update`;
-        this.http.put(url, Json.stringify(document), {headers: this.headers})
+        const url = `${this.documentUrl}/${document.id}/update`;
+        return this.http.put(url, JSON.stringify(document), {headers: this.headers})
             .toPromise()
-            .then(()=> document)
+            .then(() => document)
             .catch(this.handleError);
     }
 
