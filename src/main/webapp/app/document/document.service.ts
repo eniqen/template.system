@@ -4,7 +4,7 @@ import {Http, Headers} from "@angular/http";
 import "rxjs/operator/toPromise";
 
 import {Document} from "../entity/Document";
-import {Collection} from "../entity/CollectionDto";
+import {GenericCollection} from "../entity/GenericCollection";
 
 @Injectable
 export class DocumentService {
@@ -23,11 +23,11 @@ export class DocumentService {
             .catch(this.handleError);
     }
 
-    getDocuments(pageNum: number, pageSize: number): Promise<Collection<Document>> {
+    getDocuments(pageNum: number, pageSize: number): Promise<GenericCollection<Document>> {
         const url = `${this.documentUrl}/list`;
         return this.http.get(url)
             .toPromise()
-            .then(response => response.json().data as Collection<Document>)
+            .then(response => response.json().data as GenericCollection<Document>)
             .catch(this.errorHandler);
     }
 
