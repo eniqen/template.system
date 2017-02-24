@@ -1,14 +1,27 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
-  moduleId: module.id,
-  selector: 'my-app',
-  template: `<h1>Hello {{name}}</h1>
+    moduleId: module.id,
+    selector: 'app',
+    template: `
     <nav>
-      <a routerLink="/documents" routerLinkActive="active">Documents</a>
-      <a routerLink="/templates" routerLinkActive="active">Templates</a>
+      <a [routerLink]="['/templates']">Templates</a>
+      <a [routerLink]="['/documents']">Documents</a>
     </nav>
-    <router-outlet></router-outlet>`
 
+    <div style="color: green; margin-top: 1rem;">Outlet:</div>
+    <div style="border: 2px solid green; padding: 1rem;">
+      <router-outlet></router-outlet>
+    </div>
+  `
 })
-export class AppComponent  { name = 'Angular'; }
+export class AppComponent {
+
+    constructor(private router: Router) {
+    }
+
+    onClick() {
+        this.router.navigate(['/documents']);
+    }
+}

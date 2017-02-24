@@ -1,17 +1,11 @@
 <h2>My Template</h2>
 <div>
-    <label>templateName name:</label> <input #templateName />
-    <button (click)="add(templateName.value); templateName.value=''">
-        Add
-    </button>
+    <label>Template name:</label> <input #templateName />
 </div>
 <ul class="templates">
-    <li *ngFor="let template of templates" (click)="onSelect(template)"
-        [class.selected]="template === selectedTemplate">
-        <span class="badge">{{template.id}}</span>
+    <li *ngFor="let template of templates">
+        <!--<span class="badge">{{template.id}}</span>-->
         <span>{{template.name}}</span>
-        <button class="delete"
-                (click)="delete(template); $event.stopPropagation()">x</button>
     </li>
 </ul>
 <div *ngIf="selectedTemplate">

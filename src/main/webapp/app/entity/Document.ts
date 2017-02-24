@@ -1,8 +1,8 @@
 import {Template} from "./Template";
 
-export interface Document{
-    id: string
-    name: string
-    description: string
-    template: Template
+export class Document {
+    id: string;
+    name: string;
+    description: string;
+    template: Template;
 }

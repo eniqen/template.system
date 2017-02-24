@@ -1,16 +1,18 @@
-import {NgModule} from "@angular/core";
+
 import {RouterModule, Routes} from "@angular/router";
 import {DocumentComponent} from "./document/document.component";
 import {TemplateComponent} from "./template/template.component";
+import {TemplateService} from "./template/template.service";
+import {DocumentService} from "./document/document.service";
 
-const routes: Routes = [
-    // { path: '', redirectTo: '/templates', pathMatch: 'full' },
+export const routes: Routes = [
+    { path: '', redirectTo: 'templates', pathMatch: 'full' },
     { path: 'templates',  component: TemplateComponent },
     { path: 'documents', component: DocumentComponent }
 ];
 
-@NgModule({
-    imports: [ RouterModule.forRoot(routes) ],
-    exports: [ RouterModule ]
-})
-export class AppRoutingModule {}
+export const appRoutingProviders: any[] = [
+    TemplateService, DocumentService
+];
+
+export const routing = RouterModule.forRoot(routes);
