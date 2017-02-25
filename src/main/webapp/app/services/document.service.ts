@@ -3,8 +3,8 @@ import {Http, Headers, URLSearchParams} from "@angular/http";
 
 import "rxjs/operator/toPromise";
 
-import {Document} from "../entity/Document";
-import {GenericCollection} from "../entity/GenericCollection";
+import {Document} from "../interfaces/Document";
+import {GenericCollection} from "../interfaces/GenericCollection";
 
 @Injectable()
 export class DocumentService {

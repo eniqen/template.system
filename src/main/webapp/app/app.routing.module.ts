@@ -1,12 +1,12 @@
 
 import {RouterModule, Routes} from "@angular/router";
-import {DocumentComponent} from "./document/document.component";
-import {TemplateComponent} from "./template/template.component";
-import {TemplateService} from "./template/template.service";
-import {DocumentService} from "./document/document.service";
+import {DocumentComponent} from "./components/document.component";
+import {TemplateComponent} from "./components/template.component";
+import {TemplateService} from "./services/template.service";
+import {DocumentService} from "./services/document.service";
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'templates', pathMatch: 'full' },
+    // { path: '', redirectTo: 'templates', pathMatch: 'full' },
     { path: 'templates',  component: TemplateComponent },
     { path: 'documents', component: DocumentComponent }
 ];

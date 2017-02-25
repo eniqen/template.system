@@ -6,7 +6,7 @@
     </button>
 </div>
 <ul class="templates">
-    <li *ngFor="let template of templates let id=index" (click)="onSelect(template)"
+    <li *ngFor="let template of templates; let id=index" (click)="onSelect(template)"
         [class.selected]="template === selectedTemplate">
         <span class="badge">{{id}}</span>
         <span>{{template.name}}</span>
@@ -14,6 +14,9 @@
                 (click)="delete(template); $event.stopPropagation()">x</button>
     </li>
 </ul>
+
+<template-fields></template-fields>
+
 <div *ngIf="selectedTemplate">
     <h2>
         {{selectedTemplate.name | uppercase}} Выбран

@@ -1,8 +1,8 @@
 import {Field} from "./Field";
 
-export class Template {
-    id?: string;
+export interface Template {
+    id: string;
     name: string;
-    description?: string;
+    description: string;
     fields: Array<Field>;
 }

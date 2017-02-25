@@ -1,6 +1,6 @@
 import {Template} from "./Template";
 
-export class Document {
+export interface Document {
     id: string;
     name: string;
     description: string;

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Http, Headers, URLSearchParams} from "@angular/http";
-import {Template} from "../entity/Template";
-import {GenericCollection} from "../entity/GenericCollection";
+import {Template} from "../interfaces/Template";
+import {GenericCollection} from "../interfaces/GenericCollection";
 
 import 'rxjs/add/operator/toPromise';
 

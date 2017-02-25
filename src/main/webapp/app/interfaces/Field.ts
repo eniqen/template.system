@@ -1,4 +1,5 @@
-export class Field {
+import {FieldType} from "./FieldType";
+export interface Field {
     id: string;
     name: string;
     description: string;
@@ -6,5 +7,3 @@ export class Field {
     order: number;
     value: string;
 }
-
-enum  FieldType {TEXTBOX, INPUT, CHECKBOX}

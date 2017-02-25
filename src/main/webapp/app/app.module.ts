@@ -1,11 +1,12 @@
 import {NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {AppComponent} from "./app.component";
-import {TemplateComponent} from "./template/template.component";
-import {DocumentComponent} from "./document/document.component";
+import {TemplateComponent} from "./components/template.component";
+import {DocumentComponent} from "./components/document.component";
 import {appRoutingProviders, routing} from "./app.routing.module";
 import {HttpModule} from "@angular/http";
 import {FormsModule} from "@angular/forms";
+import {TemplateFieldComponent} from "./components/template.field.component";
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import {FormsModule} from "@angular/forms";
     declarations: [
         AppComponent,
         TemplateComponent,
-        DocumentComponent
+        DocumentComponent,
+        TemplateFieldComponent
     ],
     providers: [appRoutingProviders],
     bootstrap: [AppComponent]
