@@ -30,7 +30,7 @@ export class TemplateService {
         const url = `${this.templateUrl}/list`;
         return this.http.get(url, {search: params})
             .toPromise()
-            .then(response => response.json().data as GenericCollection<Template>)
+            .then(response => response.json() as GenericCollection<Template>)
             .catch(this.handleError);
     }
 

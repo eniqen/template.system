@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
       <a [routerLink]="['/documents']">Documents</a>
     </nav>
 
-    <div style="color: green; margin-top: 1rem;">Outlet:</div>
+    <div style="color: green; margin-top: 1rem;">Вывод:</div>
     <div style="border: 2px solid green; padding: 1rem;">
       <router-outlet></router-outlet>
     </div>

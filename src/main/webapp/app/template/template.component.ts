@@ -6,10 +6,12 @@ import {Template} from "../entity/Template";
 
 @Component({
     selector: 'templates',
-    templateUrl: './app/template/templates.component.html'
+    templateUrl: './app/template/template.component.html',
+    styleUrls: ['./app/template/template.component.css']
 })
 export class TemplateComponent implements OnInit {
     templates: Array<Template>;
+    // templates =  ['Windstorm', 'Bombasto', 'Magneta', 'Tornado'];
     selectedTemplate: Template;
 
     constructor(private templateService: TemplateService,
