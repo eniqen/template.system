@@ -9,7 +9,11 @@ import {Field} from "../interfaces/Field";
 })
 export class TemplateFieldComponent {
     fields: Array<Field>;
-    constructor(){
+    states = [{code: '0', name: 'TEXTAREA'},
+        {code: '1', name: 'INPUT'},
+        {code: '2', name: 'CHECKBOX'}];
+
+    constructor() {
         // this.keys = Object.keys(this.fieldTypes).filter(Number)
     }
 }
