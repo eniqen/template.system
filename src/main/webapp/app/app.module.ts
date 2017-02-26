@@ -7,13 +7,16 @@ import {appRoutingProviders, routing} from "./app.routing.module";
 import {HttpModule} from "@angular/http";
 import {FormsModule} from "@angular/forms";
 import {TemplateFieldComponent} from "./components/template.field.component";
+import { MaterialModule } from '@angular/material';
+
 
 @NgModule({
     imports: [
         BrowserModule,
         routing,
         HttpModule,
-        FormsModule
+        FormsModule,
+        MaterialModule
     ],
     declarations: [
         AppComponent,

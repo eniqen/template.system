@@ -5,9 +5,20 @@ import {Router} from "@angular/router";
     moduleId: module.id,
     selector: 'app',
     template: `
-    <nav>
-      <a [routerLink]="['/templates']">Templates</a>
-      <a [routerLink]="['/documents']">Documents</a>
+
+      <!---->
+      <!--<div class="mdl-layout mdl-js-layout">-->
+          <!--<header class="mdl-layout__header">-->
+           <!--<div class="mdl-js-ripple-effect">-->
+            <!--<a class="mdl-layout__tab" [routerLink]="['/templates']">Шаблоны</a>-->
+            <!--<a class="mdl-layout__tab" [routerLink]="['/documents']">Документы</a>-->
+           <!--</div>-->
+          <!--</header>-->
+      <!--</div>-->
+ 
+    <nav md-tab-nav-bar>
+      <a md-tab-link [routerLink]="['/templates']">Шаблоны</a>
+      <a md-tab-link [routerLink]="['/documents']">Документы</a>
     </nav>
 
     <div style="color: green; margin-top: 1rem;">Вывод:</div>

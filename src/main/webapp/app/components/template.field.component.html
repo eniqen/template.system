@@ -1,14 +1,20 @@
 <form>
-    <div class="field">
-        <label for="name">Название:</label>
-        <input type="text" name="name" #fieldName>
+    <div class="demo-card-wide mdl-card mdl-shadow--3dp">
+        <div class="mdl-card__supporting-text">
+            <h4>Добавление нового поля</h4>
+            <p>
+                <!-- Textfield with Floating Label -->
+            <form action="#">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="sample3">
+                    <label class="mdl-textfield__label" for="sample3">Text...</label>
+                </div>
+            </form>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+                <a md-raised-button>
+                    Добавить
+                </a>
+        </div>
     </div>
-    <!--<div>-->
-        <!--<select>-->
-            <!--<option *ngFor="let key of keys" [value]="key" [label]="fieldTypes[key]"></option>-->
-        <!--</select>-->
-    <!--</div>-->
-
-    <p><input type="button" value="Добавить"></p>
 </form>
-
