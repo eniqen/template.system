@@ -8,12 +8,22 @@ import {Field} from "../interfaces/Field";
     styleUrls: ['template.field.component.css']
 })
 export class TemplateFieldComponent {
-    fields: Array<Field>;
-    states = [{code: '0', name: 'TEXTAREA'},
+    fields: Array<Field> = [];
+    field: Field = new Field();
+    types = [
+        {code: '0', name: 'TEXTAREA'},
         {code: '1', name: 'INPUT'},
-        {code: '2', name: 'CHECKBOX'}];
+        {code: '2', name: 'CHECKBOX'}
+    ];
 
     constructor() {
-        // this.keys = Object.keys(this.fieldTypes).filter(Number)
+
+    }
+
+
+    addField() {
+        this.field.order = this.fields.length;
+        this.fields.push(this.field);
+        this.field = new Field();
     }
 }

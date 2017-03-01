@@ -1,21 +1,25 @@
-<form>
+<form #fieldForm="ngForm" (ngSubmit)="addField(); fieldForm.reset()">
     <md-card>
         <md-card-title>Добавление нового поля</md-card-title>
 
         <md-card-content>
             <md-input-container dividerColor="primary">
-                <input mdInput type="text" placeholder="Название поля">
+                <input mdInput type="text" placeholder="Название поля" required [(ngModel)]="field.name" name="name">
             </md-input-container>
             <p>
-                <md-select placeholder="Тип поля">
-                    <md-option *ngFor="let state of states" [value]="state.code">{{ state.name }}</md-option>
+                <md-select placeholder="Тип поля" [(ngModel)]="field.type" name="type">
+                    <md-option *ngFor="let type of types" [value]="type.name">{{ type.name }}</md-option>
                 </md-select>
             </p>
         </md-card-content>
         <md-card-actions>
-            <a md-raised-button color="primary">
+            <button md-raised-button color="primary" type="submit" [disabled]="!fieldForm.form.valid">
                 Добавить
-            </a>
+            </button>
         </md-card-actions>
     </md-card>
 </form>
+
+<ul>
+    <li *ngFor="let field of fields">{{field.name}} - {{field.type}} - {{field.order}}</li>
+</ul>
