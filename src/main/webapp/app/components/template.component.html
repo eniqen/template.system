@@ -1,25 +1,27 @@
-<h2>My Templates</h2>
 <div>
-    <label>Template name:</label> <input #templateName />
-    <button (click)="add(templateName.value); templateName.value=''">
-        Add
-    </button>
-</div>
-<ul class="templates">
-    <li *ngFor="let template of templates; let id=index" (click)="onSelect(template)"
-        [class.selected]="template === selectedTemplate">
-        <span class="badge">{{id}}</span>
-        <span>{{template.name}}</span>
-        <button class="delete"
-                (click)="delete(template); $event.stopPropagation()">x</button>
-    </li>
-</ul>
+    <h3>My Templates</h3>
+    <!--<ul class="templates">-->
+    <!--<li *ngFor="let template of templates; let id=index" (click)="onSelect(template)"-->
+    <!--[class.selected]="template === selectedTemplate">-->
+    <!--<span class="badge">{{id}}</span>-->
+    <!--<span>{{template.name}}</span>-->
+    <!--<button class="delete"-->
+    <!--(click)="delete(template); $event.stopPropagation()">x-->
+    <!--</button>-->
+    <!--</li>-->
+    <!--</ul>-->
 
-<template-fields></template-fields>
+    <div class="templates">
+        <md-card *ngFor="let template of templates; let id=index" (click)="onSelect(template)">
+            <md-card-content><span class="badge">{{id}}</span>{{template.name}}</md-card-content>
+        </md-card>
+    </div>
 
-<div *ngIf="selectedTemplate">
-    <h2>
-        {{selectedTemplate.name | uppercase}} Выбран
-    </h2>
-    <button (click)="gotoDetail()">View Details</button>
+
+    <div *ngIf="selectedTemplate">
+        <h2>
+            {{selectedTemplate.name | uppercase}} Выбран
+        </h2>
+        <button (click)="gotoDetail()">View Details</button>
+    </div>
 </div>

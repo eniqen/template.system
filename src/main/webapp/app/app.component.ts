@@ -5,18 +5,21 @@ import {Router} from "@angular/router";
     moduleId: module.id,
     selector: 'app',
     template: `
-
-    <md-toolbar color="primary">
-         <nav md-tab-nav-bar >
-              <a md-tab-link [routerLink]="['/templates']">Шаблоны</a>
-              <a md-tab-link [routerLink]="['/documents']">Документы</a>
-        </nav>
-    </md-toolbar>
-
-    <div style="color: green; margin-top: 1rem;">Вывод:</div>
-    <div style="border: 2px solid green; padding: 1rem;">
-      <router-outlet></router-outlet>
-    </div>
+                <md-toolbar color="primary">
+                    <nav md-tab-nav-bar>
+                        <a md-tab-link [routerLink]="['/templates']">Шаблоны</a>
+                        <a md-tab-link [routerLink]="['/documents']">Документы</a>
+                    </nav>
+                </md-toolbar>
+                <md-grid-list style="padding-top: 1%" cols="6" rowHeight="550px">
+                    <md-grid-tile [colspan]="1" [style.background]="'lightblue'">
+                        <templates></templates>
+                    </md-grid-tile>
+                    <md-grid-tile [colspan]="5" [style.background]="'lightgreen'">
+                        <template-fields></template-fields>
+                    </md-grid-tile>
+                </md-grid-list>
+                <router-outlet></router-outlet>
   `
 })
 export class AppComponent {

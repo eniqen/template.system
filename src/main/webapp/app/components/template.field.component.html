@@ -1,25 +1,42 @@
-<form #fieldForm="ngForm" (ngSubmit)="addField(); fieldForm.reset()">
-    <md-card>
-        <md-card-title>Добавление нового поля</md-card-title>
+<div>
+    <div>
+        <form #fieldForm="ngForm" (ngSubmit)="addField(); fieldForm.reset()">
+            <md-card>
+                <md-card-title>Добавление нового поля</md-card-title>
 
-        <md-card-content>
-            <md-input-container dividerColor="primary">
-                <input mdInput type="text" placeholder="Название поля" required [(ngModel)]="field.name" name="name">
-            </md-input-container>
-            <p>
-                <md-select placeholder="Тип поля" [(ngModel)]="field.type" name="type">
-                    <md-option *ngFor="let type of types" [value]="type.name">{{ type.name }}</md-option>
-                </md-select>
-            </p>
-        </md-card-content>
-        <md-card-actions>
-            <button md-raised-button color="primary" type="submit" [disabled]="!fieldForm.form.valid">
-                Добавить
-            </button>
-        </md-card-actions>
-    </md-card>
-</form>
+                <md-card-content>
+                    <md-input-container dividerColor="primary">
+                        <input mdInput type="text" placeholder="Название поля" required [(ngModel)]="field.name"
+                               name="name">
+                    </md-input-container>
+                    <p>
+                        <md-select placeholder="Тип поля" [(ngModel)]="field.type" name="type">
+                            <md-option *ngFor="let type of types" [value]="type.name">{{ type.name }}</md-option>
+                        </md-select>
+                    </p>
+                </md-card-content>
+                <md-card-actions>
+                    <button md-raised-button color="primary" type="submit" [disabled]="!fieldForm.form.valid">
+                        Добавить
+                    </button>
+                </md-card-actions>
+            </md-card>
+        </form>
+    </div>
 
-<ul>
-    <li *ngFor="let field of fields">{{field.name}} - {{field.type}} - {{field.order}}</li>
-</ul>
+    <div>
+        <ul>
+            <md-card style="size: 300px" *ngFor="let field of fields">
+                <md-card-title>{{field.name}} ({{field.type.toLowerCase()}})
+                    <div style="float: right">
+                        <button md-mini-fab color="warn">X</button>
+                    </div>
+                </md-card-title>
+            </md-card>
+        </ul>
+    </div>
+    <div>
+        <button md-raised-button color="primary">Сохранить</button>
+        <button md-raised-button color="warn">Удалить</button>
+    </div>
+</div>
