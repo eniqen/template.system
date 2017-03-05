@@ -3,8 +3,8 @@ import {Http, Headers, URLSearchParams} from "@angular/http";
 
 import "rxjs/operator/toPromise";
 
-import {Document} from "../interfaces/Document";
-import {GenericCollection} from "../interfaces/GenericCollection";
+import {Document} from "../shared/Document";
+import {GenericCollection} from "../shared/GenericCollection";
 
 @Injectable()
 export class DocumentService {
@@ -31,7 +31,7 @@ export class DocumentService {
         const url = `${this.documentUrl}/list`;
         return this.http.get(url, {search: params})
             .toPromise()
-            .then(response => response.json().data as GenericCollection<Document>)
+            .then(response => response.json() as GenericCollection<Document>)
             .catch(this.handleError);
     }
 
