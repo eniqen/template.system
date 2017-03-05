@@ -14,8 +14,10 @@
                 <!--</li>-->
                 <!--</ul>-->
 
-                <md-card *ngFor="let template of templates; let id=index" (click)="onSelect(template)">
-                    <md-card-content><span class="badge">{{id}}</span>{{template.name}}</md-card-content>
+                <md-card routerLink="test" routerLinkActive="disabled" *ngFor="let template of templates; let id=index" (click)="onSelect(template)">
+                    <md-card-content>
+                        <span class="badge">{{id}}</span>{{template.name}}
+                    </md-card-content>
                 </md-card>
 
                 <div *ngIf="selectedTemplate">
@@ -28,7 +30,8 @@
             </div>
         </md-grid-tile>
         <md-grid-tile [colspan]="5" [style.background]="'lightgreen'">
-            <template-fields></template-fields>
+            <router-outlet></router-outlet>
+            <!--<template-fields></template-fields>-->
         </md-grid-tile>
     </md-grid-list>
 </div>
