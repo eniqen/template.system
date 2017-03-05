@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {Field} from "../interfaces/Field";
+import {Field} from "../../interfaces/Field";
 
 @Component({
     moduleId: module.id,

@@ -1,8 +1,8 @@
-import {TemplateService} from "../services/template.service";
+import {TemplateService} from "../../services/template.service";
 import {Component} from "@angular/core";
 import {OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {Template} from "../interfaces/Template";
+import {Template} from "../../interfaces/Template";
 
 @Component({
     moduleId: module.id,
@@ -30,4 +30,8 @@ export class TemplateComponent implements OnInit {
     onSelect(template: Template) {
         this.selectedTemplate = template;
     }
+
+    // onSelect(template: Template) {
+    //     this.router.navigate(['/templates', template.id]);
+    // }
 }

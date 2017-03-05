@@ -11,14 +11,6 @@ import {Router} from "@angular/router";
                         <a md-tab-link [routerLink]="['/documents']">Документы</a>
                     </nav>
                 </md-toolbar>
-                <md-grid-list style="padding-top: 1%" cols="6" rowHeight="550px">
-                    <md-grid-tile [colspan]="1" [style.background]="'lightblue'">
-                        <templates></templates>
-                    </md-grid-tile>
-                    <md-grid-tile [colspan]="5" [style.background]="'lightgreen'">
-                        <template-fields></template-fields>
-                    </md-grid-tile>
-                </md-grid-list>
                 <router-outlet></router-outlet>
   `
 })

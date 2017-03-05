@@ -1,0 +1,34 @@
+<div class="templates">
+    <md-grid-list style="padding-top: 1%" cols="6" rowHeight="550px">
+        <md-grid-tile [colspan]="1" [style.background]="'lightblue'">
+            <div>
+                <h3>My Templates</h3>
+                <!--<ul class="templates">-->
+                <!--<li *ngFor="let template of templates; let id=index" (click)="onSelect(template)"-->
+                <!--[class.selected]="template === selectedTemplate">-->
+                <!--<span class="badge">{{id}}</span>-->
+                <!--<span>{{template.name}}</span>-->
+                <!--<button class="delete"-->
+                <!--(click)="delete(template); $event.stopPropagation()">x-->
+                <!--</button>-->
+                <!--</li>-->
+                <!--</ul>-->
+
+                <md-card *ngFor="let template of templates; let id=index" (click)="onSelect(template)">
+                    <md-card-content><span class="badge">{{id}}</span>{{template.name}}</md-card-content>
+                </md-card>
+
+                <div *ngIf="selectedTemplate">
+                    <h2>
+                        {{selectedTemplate.name | uppercase}} Выбран
+                    </h2>
+                    <button (click)="gotoDetail()">View Details</button>
+                </div>
+                <button md-raised-button color="primary">Создать</button>
+            </div>
+        </md-grid-tile>
+        <md-grid-tile [colspan]="5" [style.background]="'lightgreen'">
+            <template-fields></template-fields>
+        </md-grid-tile>
+    </md-grid-list>
+</div>
